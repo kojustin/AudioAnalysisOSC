@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>7D21FA2C-CC0D-495B-B9B7-1BA6AF9EF206</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AudioAnalysisOSC</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>79D77292-20B6-47B4-9A2B-BC1CE9FF9C1A</key>
+		<string>https://github.com/felixfaire/AudioAnalysisOSC.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>xcode/AudioAnalysisOSC.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>79D77292-20B6-47B4-9A2B-BC1CE9FF9C1A</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/felixfaire/AudioAnalysisOSC.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>79D77292-20B6-47B4-9A2B-BC1CE9FF9C1A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>79D77292-20B6-47B4-9A2B-BC1CE9FF9C1A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AudioAnalysisOSC</string>
+		</dict>
+	</array>
+</dict>
+</plist>

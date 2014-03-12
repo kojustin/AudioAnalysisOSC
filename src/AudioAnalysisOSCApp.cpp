@@ -32,6 +32,9 @@ public:
 	audio::PcmBuffer32fRef mPcmBuffer;
     
     Boolean live;
+    Boolean delay;
+    double tDelay;
+    uint16_t  channels = 0;
     
 };
 
@@ -54,8 +57,13 @@ void AudioAnalysisOSCApp::setup()
 	//tell the input to start capturing audio
 	mInput.start();
     
+    channels = mInput.getChannelCount();
+    console() << channels << std::endl;
+    
     // sets the live to true to start
     live = true;
+    delay = false;
+    tDelay = 0;
 	
 }
 
@@ -72,8 +80,10 @@ void AudioAnalysisOSCApp::update()
         //presently FFT only works on OS X, not iOS
         mFftDataRefFL = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ), bandCount );
         mFftDataRefFR = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT), bandCount );
-        mFftDataRefBL = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_LEFT), bandCount );
-        mFftDataRefBR = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT), bandCount );
+        
+        //            mFftDataRefBL = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_LEFT), bandCount );
+        //            mFftDataRefBR = audio::calculateFft( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT), bandCount );
+        
     }
 }
 
@@ -95,12 +105,12 @@ void AudioAnalysisOSCApp::draw()
     glPushMatrix();
     glTranslatef(0.0f, -300.0f, 0.0f);
     drawFft(mFftDataRefFL);
-    glTranslatef(0.0f, -100.0f, 0.0f);
+    glTranslatef(0.0f, 150.0f, 0.0f);
     drawFft(mFftDataRefFR);
-    glTranslatef(0.0f, 100.0f, 0.0f);
-    drawFft(mFftDataRefBL);
-    glTranslatef(0.0f, 300.0f, 0.0f);
-    drawFft(mFftDataRefBR);
+    //    glTranslatef(0.0f, 150.0f, 0.0f);
+    //    drawFft(mFftDataRefBL);
+    //    glTranslatef(0.0f, 150.0f, 0.0f);
+    //    drawFft(mFftDataRefBR);
     glPopMatrix();
     
     glPopMatrix();
@@ -117,16 +127,18 @@ void AudioAnalysisOSCApp::drawWaveForms( float height )
     uint32_t bufferSamples = mPcmBuffer->getSampleCount();
     //console() << bufferSamples << std::endl;
     
-    audio::Buffer32fRef fLeftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT);
+    audio::Buffer32fRef fLeftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT );
     audio::Buffer32fRef fRightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT );
-    audio::Buffer32fRef bLeftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_BACK_LEFT );
-    audio::Buffer32fRef bRightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT );
+    
+    //    audio::Buffer32fRef bLeftBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_BACK_LEFT );
+    //    audio::Buffer32fRef bRightBuffer = mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT );
+    
     
     int displaySize = getWindowWidth();
     int endIdx = bufferSamples;
     
-    //only draw the last 2048(changeable) samples or less
-    int32_t startIdx = ( endIdx - 1024 );
+    //only draw the last 2000(changeable) samples or less
+    int32_t startIdx = ( endIdx - 2000 );
     startIdx = math<int32_t>::clamp( startIdx, 0, endIdx );
     
     float scale = displaySize / (float)( endIdx - startIdx );
@@ -140,50 +152,79 @@ void AudioAnalysisOSCApp::drawWaveForms( float height )
     
     float maxfL = 0;
     float maxfR = 0;
-    float maxbL = 0;
-    float maxbR = 0;
+    //    float maxbL = 0;
+    //    float maxbR = 0;
     
     for( uint32_t i = startIdx, c = 0; i < endIdx; i++, c++ ) {
         
         // it seems that zero signal returns a -1 in the mdata so an extra displacement is needed
+        // 100 or - 200 is used to coalesce the transient direction
         
-        float yfL = ( ( fLeftBuffer->mData[i] - 1 ) * - 100 - 400);
-        float yfR = ( ( fRightBuffer->mData[i] - 1 ) *  - 100 - 200);
-        float ybL = ( ( bLeftBuffer->mData[i] - 1 ) *  - 100 );
-        float ybR = ( ( bRightBuffer->mData[i] - 1 ) *  - 100 + 200);
+        float yfL = ( ( fLeftBuffer->mData[i] ) * 100  );
+        float yfR = ( ( fRightBuffer->mData[i] ) * - 100 );
+        //        float ybL = ( ( bLeftBuffer->mData[i] ) * 100 );
+        //        float ybR = ( ( bRightBuffer->mData[i] ) * 100 );
+        
         
         if (abs(yfL) > abs(maxfL)) maxfL = yfL;
         if (abs(yfR) > abs(maxfR)) maxfR = yfR;
-        if (abs(ybL) > abs(maxbL)) maxbR = ybL;
-        if (abs(ybR) > abs(maxbR)) maxbL = ybR;
+        //        if (abs(ybL) > abs(maxbL)) maxbR = ybL;
+        //        if (abs(ybR) > abs(maxbR)) maxbL = ybR;
+        
         
         
         linefL.push_back( Vec2f( ( c * scale ), yfL ) );
         linefR.push_back( Vec2f( ( c * scale ), yfR ) );
-        linebL.push_back( Vec2f( ( c * scale ), ybL ) );
-        linebR.push_back( Vec2f( ( c * scale ), ybR ) );
+        //        linebL.push_back( Vec2f( ( c * scale ), ybL ) );
+        //        linebR.push_back( Vec2f( ( c * scale ), ybR ) );
         
+        // draw ellipse at start point of transient
         
+        if (i > 10 && delay == false){
+            if (abs(fLeftBuffer->mData[i]*100) > 2 && abs(fLeftBuffer->mData[i-10]*100) < 2){
+                
+                gl::color(c*0.01, c*0.01, c*0.01);
+                
+                glPushMatrix();
+                glTranslatef(0.0f, -300.0f, 0.0f);
+                const Vec2f start = *new Vec2f(c*scale, fLeftBuffer->mData[i]*100);
+                gl::drawSolidEllipse(start, 3.0f, 3.0f);
+                
+                glPopMatrix();
+                
+                delay = true;
+                
+            }
+        }
     }
     
-    //if (abs(maxfR) > 80 ) live = false;
+    if (delay) tDelay += 0.1;
+    if (tDelay > 10) delay = false;
+    
+    if (abs(maxfL) > 20 || abs(maxfR) > 20) live = false;
+    
+    // draws red maximum volume line on a single channel
     
     gl::color( Color( 1.0f, 0.0f, 0.0f ) );
-    
-    Vec2f st = *new Vec2f(0.0f, maxfR);
-    Vec2f end = *new Vec2f(getWindowWidth(), maxfR);
-    
+    Vec2f st = *new Vec2f(0.0f, maxfL - 300.0f);
+    Vec2f end = *new Vec2f(getWindowWidth(), maxfL -300.0f);
     gl::drawLine(st, end);
+    
+    
+    // set blue colour of line
     
     gl::color( Color( 0.0f, 0.8f, 1.0f ) );
     
+    glPushMatrix();
+    glTranslatef(0.0f, -300.0f, 0.0f);
     gl::draw( linefL );
-    
+    glTranslatef(0.0f, 150.0f, 0.0f);
     gl::draw( linefR );
-    
+    glTranslatef(0.0f, 150.0f, 0.0f);
     gl::draw( linebL );
-    
+    glTranslatef(0.0f, 150.0f, 0.0f);
     gl::draw( linebR );
+    glPopMatrix();
     
     
 }
