@@ -9,6 +9,8 @@ typedef ci::app::AppBasic AppBase;
 #include <iostream>
 #include <vector>
 
+#include "Wave.h"
+
 using namespace ci;
 using namespace ci::app;
 
@@ -23,7 +25,6 @@ public:
 	void drawFft( std::shared_ptr<float> mFftDataRef );
     void keyDown(KeyEvent e);
     
-	
 	audio::Input mInput;
 	std::shared_ptr<float> mFftDataRefFL;
     std::shared_ptr<float> mFftDataRefFR;
@@ -31,9 +32,11 @@ public:
     std::shared_ptr<float> mFftDataRefBR;
 	audio::PcmBuffer32fRef mPcmBuffer;
     
+    Wave waves [4];
+    
     Boolean live;
     Boolean delay;
-    double tDelay;
+    float tDelay;
     uint16_t  channels = 0;
     
 };
@@ -198,8 +201,8 @@ void AudioAnalysisOSCApp::drawWaveForms( float height )
         }
     }
     
-    if (delay) tDelay += 0.1;
-    if (tDelay > 10) delay = false;
+    if (delay) tDelay += 0.1f;
+    if (tDelay > 5) delay = false;
     
     if (abs(maxfL) > 20 || abs(maxfR) > 20) live = false;
     
