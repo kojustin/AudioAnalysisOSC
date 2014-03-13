@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Wave.cpp"
-            timestampString = "416343254.414207"
+            filePath = "../src/AudioAnalysisOSCApp.cpp"
+            timestampString = "416361037.833797"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "Wave::update(cinder::audio::PcmBuffer32fRef *mPcm)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "AudioAnalysisOSCApp::update()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/AudioAnalysisOSCApp.cpp"
-            timestampString = "416343799.513164"
+            timestampString = "416352407.251288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "AudioAnalysisOSCApp::setup()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Wave.cpp"
+            timestampString = "416359252.026383"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "Wave::update( cinder::audio::Input mInput )"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Wave.cpp"
+            timestampString = "416364192.957736"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "Wave::drawWave( uint32_t bufferSamples, float amp)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../src/AudioAnalysisOSCApp.cpp"
+            timestampString = "416361037.833797"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "AudioAnalysisOSCApp::update()"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +90,88 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wave.cpp"
-            timestampString = "416343933.089869"
+            timestampString = "416364192.957736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "Wave::drawWave( float amp)"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "Wave::drawFft( float height)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Wave.cpp"
+            timestampString = "416359252.026383"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "Wave::Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _channel)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wave::Wave(std::__1::shared_ptr&lt;cinder::audio::BufferT&lt;float&gt; &gt;)"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
+                  timestampString = "416355201.067901"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "1772">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wave::Wave(std::__1::shared_ptr&lt;cinder::audio::BufferT&lt;float&gt; &gt;)"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
+                  timestampString = "416355201.068126"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "1914">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wave::Wave(std::__1::shared_ptr&lt;cinder::audio::BufferT&lt;float&gt; &gt;)"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
+                  timestampString = "416355201.068321"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "2288">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Wave.cpp"
+            timestampString = "416356990.326553"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "Wave::Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _channel)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,41 +182,55 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wave.cpp"
-            timestampString = "416344009.79446"
+            timestampString = "416364192.957736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "Wave::drawWave( float amp)"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "Wave::drawWave( uint32_t bufferSamples, float amp)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Wave::drawWave(float)"
+                  symbolName = "Wave::drawWave(unsigned int, float)"
                   moduleName = "AudioAnalysisOSC"
                   urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
-                  timestampString = "416344745.278579"
+                  timestampString = "416364463.752899"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100"
-                  offsetFromSymbolStart = "353">
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "183">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Wave::drawWave(float)"
+                  symbolName = "Wave::drawWave(unsigned int, float)"
                   moduleName = "AudioAnalysisOSC"
                   urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
-                  timestampString = "416344745.278731"
+                  timestampString = "416364463.753103"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "100"
-                  endingLineNumber = "100"
-                  offsetFromSymbolStart = "384">
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "211">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Wave::drawWave(unsigned int, float)"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
+                  timestampString = "416364463.753284"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "549">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -104,57 +242,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Wave.cpp"
-            timestampString = "416344053.240271"
+            timestampString = "416364260.613665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "Wave::update(cinder::audio::PcmBuffer32fRef *mPcm)"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "Wave::drawWave( uint32_t bufferSamples, float amp)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Wave::update(std::__1::shared_ptr&lt;cinder::audio::PcmBufferT&lt;float&gt; &gt;)"
-                  moduleName = "AudioAnalysisOSC"
-                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
-                  timestampString = "416344745.278862"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "545">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Wave::update(std::__1::shared_ptr&lt;cinder::audio::PcmBufferT&lt;float&gt; &gt;)"
-                  moduleName = "AudioAnalysisOSC"
-                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
-                  timestampString = "416344745.279061"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "694">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Wave::update(std::__1::shared_ptr&lt;cinder::audio::PcmBufferT&lt;float&gt; &gt;)"
-                  moduleName = "AudioAnalysisOSC"
-                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.cpp"
-                  timestampString = "416344745.279296"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "1068">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

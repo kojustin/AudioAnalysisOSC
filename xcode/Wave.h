@@ -22,15 +22,16 @@ typedef ci::app::AppBasic AppBase;
 class Wave {
 public:
 	Wave();
-    Wave( cinder::audio::Buffer32fRef _channelBuffer);
+    Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _channel);
          
-	void update( cinder::audio::PcmBuffer32fRef mPcm);
-	void drawWave( float amp);
+	void update( cinder::audio::Input mInput);
+	void drawWave(uint32_t bufferSamples, float amp);
     void drawFft( float height);
 	
     // for audio stream
-	cinder::audio::PcmBuffer32fRef mPcmBuffer;
-    cinder::audio::Buffer32fRef channelBuffer;
+	cinder::audio::PcmBuffer32fRef pcmBuffer;
+    cinder::audio::Buffer32fRef  channelBuffer;
+    cinder::audio::ChannelIdentifier channel;
     
     // for fft
     std::shared_ptr<float> mFftDataRef;

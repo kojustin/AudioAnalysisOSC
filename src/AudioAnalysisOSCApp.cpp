@@ -20,14 +20,11 @@ public:
 	void setup();
 	void update();
 	void draw();
-
+    
     void keyDown(KeyEvent e);
     
 	audio::Input mInput;
-	std::shared_ptr<float> mFftDataRefFL;
-    std::shared_ptr<float> mFftDataRefFR;
-    std::shared_ptr<float> mFftDataRefBL;
-    std::shared_ptr<float> mFftDataRefBR;
+    
 	audio::PcmBuffer32fRef mPcmBuffer;
     
     Wave waves [4];
@@ -63,27 +60,32 @@ void AudioAnalysisOSCApp::setup()
     
     // initialise the Waves
     
-    mPcmBuffer = mInput.getPcmBuffer();
-    waves[0] = *new Wave( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_LEFT ) );
-    waves[1] = *new Wave( mPcmBuffer->getChannelData( audio::CHANNEL_FRONT_RIGHT ) );
-    //    waves[2] = *new Wave( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT ) );
-    //    waves[3] = *new Wave( mPcmBuffer->getChannelData( audio::CHANNEL_BACK_RIGHT ) );
-    
+    waves[0] = *new Wave( mInput, audio::CHANNEL_FRONT_LEFT );
+    waves[1] = *new Wave( mInput, audio::CHANNEL_FRONT_RIGHT );
+    //    waves[2] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_LEFT );
+    //    waves[3] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
     
 	
 }
 
 void AudioAnalysisOSCApp::update()
 {
+    mPcmBuffer = mInput.getPcmBuffer();
+	if( ! mPcmBuffer ) {
+		return;
+	}
+    
     int peakCount = 0;
     
     if (live){
         for (int i = 0; i < channels; i++){
-            waves[i].update(mInput.getPcmBuffer());
+            waves[i].update(mInput);
             
             // counts if any of the waves have gone over the threshold
             if (waves[i].peaked) peakCount++;
         }
+        
+        // if the waves have gone over the threshold then pause
         
         if (peakCount > 0) {
             live = false;
@@ -92,13 +94,12 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
-    
 }
 
 void AudioAnalysisOSCApp::draw()
 {
     
-    float waveFormHeight = 100.0;
+    float waveFormHeight = 100.0f;
     
     
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
@@ -107,9 +108,14 @@ void AudioAnalysisOSCApp::draw()
     glPushMatrix();
     glTranslatef(0.0f, getWindowHeight()*0.5f, 0.0f);
     
+    uint32_t bufferSamples = mPcmBuffer->getSampleCount();
+    
     for (int i = 0; i < channels; i++){
-        waves[i].drawWave( waveFormHeight );
-        waves[i].drawFft(500.0f);
+        
+        waves[i].drawWave( bufferSamples, waveFormHeight );
+        waves[i].drawFft(1000.0f);
+        
+        glTranslatef(0.0f, 200.0f, 0.0f);
     }
     
     glPopMatrix();
