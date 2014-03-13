@@ -15,17 +15,16 @@
 typedef ci::app::AppBasic AppBase;
 
 #include "cinder/audio/Input.h"
-#include <iostream>
-#include <vector>
-
+//#include <iostream>
+//#include <vector>
 
 class Wave {
 public:
 	Wave();
-    Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _channel);
+    Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _channel, float _amp);
          
-	void update( cinder::audio::Input mInput);
-	void drawWave(uint32_t bufferSamples, float amp);
+	void update( cinder::audio::Input mInput, uint32_t bufferSamples);
+	void drawWave(Boolean * live);
     void drawFft( float height);
 	
     // for audio stream
@@ -41,6 +40,12 @@ public:
 	Boolean delay;
     float tDelay;
     int startIndex;
+    cinder::Vec2f startPt;
+    
+    float max;
+    float amp;
+    
+    cinder::PolyLine<cinder::Vec2f>	line;
     
     Boolean peaked;
 

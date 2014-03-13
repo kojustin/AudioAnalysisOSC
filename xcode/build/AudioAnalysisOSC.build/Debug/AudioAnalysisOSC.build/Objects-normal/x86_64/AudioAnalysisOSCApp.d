@@ -44,5 +44,5 @@ dependencies: \
   ../../../cinder_0.8.5_mac/boost/boost/preprocessor/seq/detail/binary_transform.hpp \
   ../../../cinder_0.8.5_mac/boost/boost/preprocessor/seq/to_tuple.hpp \
   ../../../cinder_0.8.5_mac/boost/boost/preprocessor/seq/transform.hpp \
-  ../../../cinder_0.8.5_mac/include/cinder/audio/Input.h \
-  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.h
+  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.h \
+  ../../../cinder_0.8.5_mac/include/cinder/audio/Input.h

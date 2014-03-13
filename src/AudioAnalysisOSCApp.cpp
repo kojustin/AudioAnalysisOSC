@@ -1,13 +1,12 @@
 #include "cinder/Cinder.h"
 
-
 #include "cinder/app/AppBasic.h"
 #include "cinder/audio/FftProcessor.h"
 typedef ci::app::AppBasic AppBase;
 
-#include "cinder/audio/Input.h"
-#include <iostream>
-#include <vector>
+//#include "cinder/audio/Input.h"
+//#include <iostream>
+//#include <vector>
 
 #include "Wave.h"
 
@@ -60,11 +59,12 @@ void AudioAnalysisOSCApp::setup()
     
     // initialise the Waves
     
-    waves[0] = *new Wave( mInput, audio::CHANNEL_FRONT_LEFT );
-    waves[1] = *new Wave( mInput, audio::CHANNEL_FRONT_RIGHT );
+    waves[0] = *new Wave( mInput, audio::CHANNEL_FRONT_LEFT , 200.0f);
+    waves[1] = *new Wave( mInput, audio::CHANNEL_FRONT_RIGHT , 200.0f);
     //    waves[2] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_LEFT );
     //    waves[3] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
     
+    live = true;
 	
 }
 
@@ -75,23 +75,22 @@ void AudioAnalysisOSCApp::update()
 		return;
 	}
     
-    int peakCount = 0;
+    // updates the number of buffer samples to use in wave.update()
+    uint32_t bufferSamples = mPcmBuffer->getSampleCount();
     
+    // if the program is live, update the contents of the waves
     if (live){
         for (int i = 0; i < channels; i++){
-            waves[i].update(mInput);
             
-            // counts if any of the waves have gone over the threshold
-            if (waves[i].peaked) peakCount++;
+            waves[i].update(mInput, bufferSamples);
+            
+            // pauses if any of the waves have gone over the threshold
+            if (waves[i].peaked){
+                live = false;
+            }
+            
         }
         
-        // if the waves have gone over the threshold then pause
-        
-        if (peakCount > 0) {
-            live = false;
-        }else{
-            live = true;
-        }
     }
     
 }
@@ -99,20 +98,16 @@ void AudioAnalysisOSCApp::update()
 void AudioAnalysisOSCApp::draw()
 {
     
-    float waveFormHeight = 100.0f;
-    
     
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     gl::clear( Color( 0.1f, 0.1f, 0.1f ) );
     
     glPushMatrix();
-    glTranslatef(0.0f, getWindowHeight()*0.5f, 0.0f);
-    
-    uint32_t bufferSamples = mPcmBuffer->getSampleCount();
+    glTranslatef(0.0f, getWindowHeight()*0.4f, 0.0f);
     
     for (int i = 0; i < channels; i++){
         
-        waves[i].drawWave( bufferSamples, waveFormHeight );
+        waves[i].drawWave(& live);
         waves[i].drawFft(1000.0f);
         
         glTranslatef(0.0f, 200.0f, 0.0f);
