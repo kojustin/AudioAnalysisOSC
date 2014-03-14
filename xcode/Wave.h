@@ -39,11 +39,14 @@ public:
     // for start index
 	Boolean delay;
     float tDelay;
+    float delayThresh;
     int startIndex;
     cinder::Vec2f startPt;
     
     float max;
     float amp;
+    float aveFreq;
+    float attack;
     
     cinder::PolyLine<cinder::Vec2f>	line;
     

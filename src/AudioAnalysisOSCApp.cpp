@@ -103,31 +103,37 @@ void AudioAnalysisOSCApp::draw()
     gl::clear( Color( 0.1f, 0.1f, 0.1f ) );
     
     glPushMatrix();
-    glTranslatef(0.0f, getWindowHeight()*0.4f, 0.0f);
+    glTranslatef(0.0f, getWindowHeight()/channels - 100.0f, 0.0f);
     
     for (int i = 0; i < channels; i++){
         
         waves[i].drawWave(& live);
-        waves[i].drawFft(1000.0f);
+        waves[i].drawFft(2000.0f);
         
         glTranslatef(0.0f, 200.0f, 0.0f);
     }
     
     glPopMatrix();
+    
+    float difference = waves[0].startIndex - waves[1].startIndex;
+    Vec2f triangulate = * new Vec2f(getWindowWidth() * 0.5f + difference*(getWindowWidth() * 0.5f)/140.0f, getWindowHeight() * 0.5f);
+    gl::drawSolidEllipse(triangulate, 10, 10);
 }
 
 
 void AudioAnalysisOSCApp::keyDown(KeyEvent e){
-    //    if (e.getChar() == 's') {
-    //        mInput.start();
-    //    }
-    //    if (e.getChar() == 'e') {
-    //        mInput.stop();
-    //    }
     
     if (e.getChar() == 's') {
         live = true;
     }
+    
+    if (e.getChar() == 'f') {
+        console() << "freq: " << waves[0].aveFreq << std::endl;
+        console() << "max: " << waves[0].max << std::endl;
+        console() << "start: " << waves[0].startIndex << std::endl;
+        console() << "attack: " << waves[0].attack << std::endl;
+    }
+    
 }
 
 CINDER_APP_BASIC( AudioAnalysisOSCApp, RendererGl )

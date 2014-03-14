@@ -35,12 +35,15 @@ Wave::Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _chann
     
 	delay = false;
     tDelay = 0.0f;
+    delayThresh = 10.0f;
     
     startIndex = 0;
     startPt = * new Vec2f(0.0f, 0.0f);
     
     max = 0.0f;
     amp = _amp;
+    aveFreq = 0.0f;
+    attack = 0.0f;
     
     peaked = false;
     
@@ -91,8 +94,15 @@ void Wave::update( cinder::audio::Input mInput , uint32_t bufferSamples){
         // find start point of transient
         // and record index at start point
         
-        if (i > 10 && delay == false){
-            if (abs(channelBuffer->mData[i]*amp) > 2 && abs(channelBuffer->mData[i-10]*amp) < 2 && abs(channelBuffer->mData[i-5]*amp) < 2){
+        if (i > 50 && delay == false){
+            
+            int count = 0;
+            
+            for (int j = 5; j < 50; j+=5){
+                if (abs(channelBuffer->mData[i-j]*amp) > 2) count++;
+            }
+            
+            if (abs(channelBuffer->mData[i]*amp) > 1 && count < 1){
                 
                 gl::color(1.0f, 1.0f, 1.0f);
                 
@@ -103,13 +113,19 @@ void Wave::update( cinder::audio::Input mInput , uint32_t bufferSamples){
                 
                 delay = true;
                 
+                // gather attack gradient information
+                
+                if (i < bufferSamples - 10){
+                    attack = abs( channelBuffer->mData[i]*amp - channelBuffer->mData[i+9]*amp);
+                }
+                
             }
         }
     }
     
     // delay control is now in draw so it definitely updates every frame
     
-    if (abs(max) > 20.0f){
+    if (abs(max) > 10.0f){
         peaked = true;
     }else{
         peaked = false;
@@ -128,9 +144,10 @@ void Wave::drawWave(Boolean * live){
     // timer for transient stops
     
     if (delay) tDelay += 0.1f;
-    if (tDelay > 5.0f){
+    if (tDelay > delayThresh){
         delay = false;
         tDelay = 0.0f;
+        *live = true;
     }
     
     int displaySize = cinder::app::getWindowWidth();
@@ -141,9 +158,6 @@ void Wave::drawWave(Boolean * live){
     Vec2f st = *new Vec2f(0.0f, max);
     Vec2f end = *new Vec2f(displaySize, max);
     gl::drawLine(st, end);
-    
-    // able to change the program state with a pointer
-    if (tDelay > 4.5f) *live = true;
     
     // set blue colour of line and draw it
     
@@ -166,8 +180,7 @@ void Wave::drawFft( float height){
     if( ! pcmBuffer ) {
         return;
     }
-    
-    float ht = 500.0f;
+
     float bottom = 0.0f;
     
     if( ! mFftDataRef ) {
@@ -177,7 +190,8 @@ void Wave::drawFft( float height){
     float * fftBuffer = mFftDataRef.get();
     
     for( int i = 0; i < ( bandCount ); i++ ) {
-        float barY = fftBuffer[i] / bandCount * ht;
+        float barY = fftBuffer[i] / bandCount * height;
+        aveFreq+=barY;
         glBegin( GL_QUADS );
         glColor3f( 255.0f, 255.0f, 0.0f );
         glVertex2f( i * 3, bottom );
@@ -187,6 +201,7 @@ void Wave::drawFft( float height){
         glVertex2f( i * 3, bottom - barY );
         glEnd();
     }
+    aveFreq/=bandCount;
     
     
 }
