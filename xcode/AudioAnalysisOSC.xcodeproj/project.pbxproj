@@ -13,6 +13,8 @@
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
 		0779644218D0CCF30077C28D /* Wave.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0779644018D0CCF30077C28D /* Wave.cpp */; };
+		07EA38C518D3618200407668 /* Net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EA38C318D3618200407668 /* Net.cpp */; };
+		07EA38C818D3677000407668 /* Neuron.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07EA38C618D3677000407668 /* Neuron.cpp */; };
 		2591A17645B047E2AB32336D /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6E3FC956DDF5469A8A877E7C /* OscOutboundPacketStream.cpp */; };
 		376DF0B0C7C64F16A5642D58 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 959A07F66ADA49A8ABC3E523 /* NetworkingUtils.cpp */; };
 		4EE9BA91DD05494AB9C721E7 /* OscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 548A9D9025384463BB25DFDC /* OscSender.cpp */; };
@@ -41,6 +43,10 @@
 		05A0C66438734F8490D42478 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0779644018D0CCF30077C28D /* Wave.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Wave.cpp; sourceTree = "<group>"; };
 		0779644118D0CCF30077C28D /* Wave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wave.h; sourceTree = "<group>"; };
+		07EA38C318D3618200407668 /* Net.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Net.cpp; sourceTree = "<group>"; };
+		07EA38C418D3618200407668 /* Net.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Net.h; sourceTree = "<group>"; };
+		07EA38C618D3677000407668 /* Neuron.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Neuron.cpp; sourceTree = "<group>"; };
+		07EA38C718D3677000407668 /* Neuron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neuron.h; sourceTree = "<group>"; };
 		0E3EC801AC3547D4838C0AE5 /* NetworkingUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkingUtils.h; path = ../../../cinder_0.8.5_mac/blocks/OSC/src/ip/NetworkingUtils.h; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		19E1E4BB191D4B7786F100DA /* OscListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = OscListener.cpp; path = ../../../cinder_0.8.5_mac/blocks/OSC/src/OscListener.cpp; sourceTree = "<group>"; };
@@ -111,7 +117,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				07EA38C618D3677000407668 /* Neuron.cpp */,
 				79BC243D4AD44090A4DE7D9A /* AudioAnalysisOSCApp.cpp */,
+				07EA38C318D3618200407668 /* Net.cpp */,
 				0779644018D0CCF30077C28D /* Wave.cpp */,
 			);
 			name = Source;
@@ -183,6 +191,8 @@
 		29B97315FDCFA39411CA2CEA /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				07EA38C418D3618200407668 /* Net.h */,
+				07EA38C718D3677000407668 /* Neuron.h */,
 				0779644118D0CCF30077C28D /* Wave.h */,
 				FE2251EA3AAC43159BA9565A /* Resources.h */,
 				01111D5515D4422B9A1C24FC /* AudioAnalysisOSC_Prefix.pch */,
@@ -327,8 +337,10 @@
 				5F096BF9EB1F4AF68ECA0E59 /* OscBundle.cpp in Sources */,
 				8B50352D93654AE19DBC9AAD /* OscListener.cpp in Sources */,
 				822DB89ECE1740E1BCEE18D4 /* OscMessage.cpp in Sources */,
+				07EA38C518D3618200407668 /* Net.cpp in Sources */,
 				4EE9BA91DD05494AB9C721E7 /* OscSender.cpp in Sources */,
 				FB623705A8FD412497CCD2F4 /* IpEndpointName.cpp in Sources */,
+				07EA38C818D3677000407668 /* Neuron.cpp in Sources */,
 				2591A17645B047E2AB32336D /* OscOutboundPacketStream.cpp in Sources */,
 				AAC29868611B4BF4B3431010 /* OscPrintReceivedElements.cpp in Sources */,
 				55CE845CD41241FFBA2D167A /* OscReceivedElements.cpp in Sources */,

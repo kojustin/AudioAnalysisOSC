@@ -45,4 +45,6 @@ dependencies: \
   ../../../cinder_0.8.5_mac/boost/boost/preprocessor/seq/to_tuple.hpp \
   ../../../cinder_0.8.5_mac/boost/boost/preprocessor/seq/transform.hpp \
   /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.h \
-  ../../../cinder_0.8.5_mac/include/cinder/audio/Input.h
+  ../../../cinder_0.8.5_mac/include/cinder/audio/Input.h \
+  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Net.h \
+  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Neuron.h

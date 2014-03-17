@@ -9,18 +9,24 @@ typedef ci::app::AppBasic AppBase;
 //#include <vector>
 
 #include "Wave.h"
+#include "Net.h"
 
 using namespace ci;
 using namespace ci::app;
 
 class AudioAnalysisOSCApp : public AppBase {
 public:
+    
     void prepareSettings( Settings *settings);
 	void setup();
 	void update();
 	void draw();
-    
     void keyDown(KeyEvent e);
+    
+    void teach(Net myNet, vector<double> inputVals, vector<double> targetVals);
+    void respond(Net myNet, vector<double> results);
+    
+    // Audio Variables ////////////////////////////////////////////
     
 	audio::Input mInput;
     
@@ -33,6 +39,21 @@ public:
     float tDelay;
     uint16_t  channels = 0;
     
+    // Neural Net Variables ////////////////////////////////////////
+    
+    
+    
+    vector<unsigned> topology;
+    
+    vector<double> inputVals;
+    
+    vector<double> targetVals;
+    
+    vector<double> resultVals;
+    
+    
+    
+    
 };
 
 void AudioAnalysisOSCApp::prepareSettings( Settings *settings ){
@@ -42,6 +63,9 @@ void AudioAnalysisOSCApp::prepareSettings( Settings *settings ){
 
 void AudioAnalysisOSCApp::setup()
 {
+    
+    // Audio Setup ////////////////////////////////////////////////////////////
+    
 	//iterate input devices and print their names to the console
 	const std::vector<audio::InputDeviceRef>& devices = audio::Input::getDevices();
 	for( std::vector<audio::InputDeviceRef>::const_iterator iter = devices.begin(); iter != devices.end(); ++iter ) {
@@ -65,7 +89,30 @@ void AudioAnalysisOSCApp::setup()
     //    waves[3] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
     
     live = true;
-	
+    
+    
+    
+    
+    // Neural Net Setup ////////////////////////////////////////////////////////////
+    
+    // there will be 9 inputs to the network
+    // the 4 relative positions of the transients
+    // the 4 max volumes
+    // and the average frequency
+    
+    // the 3 outputs are
+    // u position
+    // v position
+    // gesture type (positive one, negative the other)
+    
+    topology.push_back(9);
+    topology.push_back(12);
+    topology.push_back(3);
+                       
+    Net myNet(topology);
+    
+    
+    
 }
 
 void AudioAnalysisOSCApp::update()
@@ -133,6 +180,19 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
         console() << "start: " << waves[0].startIndex << std::endl;
         console() << "attack: " << waves[0].attack << std::endl;
     }
+    
+}
+
+void AudioAnalysisOSCApp::teach(Net myNet, vector<double> inputVals, vector<double> targetVals){
+    
+    myNet.feedForward(inputVals);
+    myNet.feedForward(targetVals);
+    
+}
+
+void AudioAnalysisOSCApp::respond(Net myNet, vector<double> results){
+    
+    myNet.getResults(results);
     
 }
 
