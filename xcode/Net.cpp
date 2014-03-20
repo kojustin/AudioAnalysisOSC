@@ -82,7 +82,6 @@ void Net::feedForward(const vector<double> &inputVals){
 
 void Net::backProp( const vector<double> &targetVals){
     
-    
     // calculate overall net error (RMS of output neuron errors)
     
     Layer &outputLayer = m_layers.back();

@@ -38,6 +38,7 @@ Wave::Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _chann
     delayThresh = 3.0f;
     
     startIndex = 0;
+    relativeStart = 0;
     startPt = * new Vec2f(0.0f, 0.0f);
     
     max = 0.0f;
@@ -192,23 +193,27 @@ void Wave::drawFft( float height){
     float * fftBuffer = mFftDataRef.get();
     
     float maxFreq = 0.0f;
+    int freqIdx = 0;
     
     for( int i = 0; i < ( bandCount ); i++ ) {
         float barY = fftBuffer[i] / bandCount * height;
         
-        if (barY > maxFreq) maxFreq = barY;
+        if (barY > maxFreq){
+            maxFreq = barY;
+            freqIdx = i;
+        }
         
         glBegin( GL_QUADS );
-        glColor3f( 255.0f, 255.0f, 0.0f );
-        glVertex2f( i * 3, bottom );
-        glVertex2f( i * 3 + 1, bottom );
+        glColor3f( 0.0f, 100.0f, 255.0f );
+        glVertex2f( i * 5, bottom );
+        glVertex2f( i * 5 + 4, bottom );
         glColor3f( 0.0f, 255.0f, 0.0f );
-        glVertex2f( i * 3 + 1, bottom - barY );
-        glVertex2f( i * 3, bottom - barY );
+        glVertex2f( i * 5 + 4, bottom - barY );
+        glVertex2f( i * 5, bottom - barY );
         glEnd();
         
     }
     
-    aveFreq = maxFreq;
+    aveFreq = freqIdx;
     
 }

@@ -1,7 +1,16 @@
 #include "cinder/Cinder.h"
 
 #include "cinder/app/AppBasic.h"
+//#include "cinder/app/AppNative.h"
 #include "cinder/audio/FftProcessor.h"
+
+#include "cinder/gl/gl.h"
+#include "cinder/gl/Texture.h"
+#include "cinder/gl/TextureFont.h"
+#include "cinder/Text.h"
+
+#include "cinder/Utilities.h"
+
 typedef ci::app::AppBasic AppBase;
 
 //#include "cinder/audio/Input.h"
@@ -25,6 +34,7 @@ public:
     
     void teach(Net myNet, vector<double> inputVals, vector<double> targetVals);
     void respond(Net myNet, vector<double> results);
+    void displayTags();
     
     // Audio Variables ////////////////////////////////////////////
     
@@ -41,7 +51,6 @@ public:
     
     // Neural Net Variables ////////////////////////////////////////
     
-    
     Net myNet;
     
     vector<float> trainingSet;
@@ -54,7 +63,12 @@ public:
     
     vector<double> resultVals;
     
+    Boolean teaching;
     
+    // Font Setup ///////////////////////////////////////////////////
+    
+    Font				mFont;
+	gl::TextureFontRef	mTextureFont;
     
     
 };
@@ -66,6 +80,7 @@ void AudioAnalysisOSCApp::prepareSettings( Settings *settings ){
 
 void AudioAnalysisOSCApp::setup()
 {
+    gl::enableAlphaBlending();
     
     // Audio Setup ////////////////////////////////////////////////////////////
     
@@ -108,9 +123,9 @@ void AudioAnalysisOSCApp::setup()
     // v position
     // gesture type (positive one, negative the other)
     
-    topology.push_back(6);
+    topology.push_back(5);
     topology.push_back(12);
-    topology.push_back(3);
+    topology.push_back(2);
                        
     myNet = *new Net(topology);
     
@@ -118,6 +133,16 @@ void AudioAnalysisOSCApp::setup()
         trainingSet.push_back(i*5.0f);
     }
     
+    targetVals.push_back(30);
+    targetVals.push_back(3);
+    
+    
+    teaching = true;
+    
+    // Font Setup /////////////////////////////////////////////////////////////////
+    
+    mFont = Font( "Consolas", 15 );
+	mTextureFont = gl::TextureFont::create( mFont );
     
 }
 
@@ -134,16 +159,49 @@ void AudioAnalysisOSCApp::update()
     // if the program is live, update the contents of the waves
     if (live){
         for (int i = 0; i < channels; i++){
-            
             waves[i].update(mInput, bufferSamples);
+        }
+    }
+    
+    int s = 0;
+    int minIdx = 3000;
+    
+    // loop finds the wave index that arrived first
+    
+    for (unsigned i = 0; i < channels; i++){
+        if (waves[i].startIndex < minIdx){
+            minIdx = waves[i].startIndex;
+            s = i;
+        }
+    }
+    
+    Wave &earliest = waves[s];
+    waves[s].relativeStart = 0;
+    
+    // sets all the start indexes relative to the first one
+    for (unsigned i = 0; i < channels; i++){
+        if (i != s){
+            waves[i].relativeStart = waves[i].startIndex - earliest.startIndex;
+        }
+    }
+    
+    
+    if (live){
+        for (int i = 0; i < channels; i++){
             
-            // pauses if any of the waves have gone over the threshold
+            // pauses if any of the waves have gone over the threshold and either learn or respond
             if (waves[i].peaked){
                 live = false;
+                
+                // make the network respond
+                
+                if (teaching) {
+                    //teach( myNet, inputVals, targetVals);
+                } else {
+                    //respond( myNet, resultVals );
+                }
             }
-            
         }
-        
     }
     
 }
@@ -171,8 +229,10 @@ void AudioAnalysisOSCApp::draw()
     glPopMatrix();
     
     float difference = waves[0].startIndex - waves[1].startIndex;
-    Vec2f triangulate = * new Vec2f(getWindowWidth() * 0.5f + difference*(getWindowWidth() * 0.5f)/140.0f, getWindowHeight() * 0.5f);
+    Vec2f triangulate = Vec2f(getWindowWidth() * 0.5f + difference*(getWindowWidth() * 0.5f)/140.0f, getWindowHeight() * 0.5f);
     gl::drawSolidEllipse(triangulate, 10, 10);
+    
+    displayTags();
 }
 
 
@@ -194,13 +254,40 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
 void AudioAnalysisOSCApp::teach(Net myNet, vector<double> inputVals, vector<double> targetVals){
     
     myNet.feedForward(inputVals);
-    myNet.feedForward(targetVals);
+    myNet.backProp(targetVals);
     
 }
 
 void AudioAnalysisOSCApp::respond(Net myNet, vector<double> results){
     
     myNet.getResults(results);
+    
+}
+
+void AudioAnalysisOSCApp::displayTags(){
+    
+    glPushMatrix();
+    glTranslatef(110.0f, 60.0f, 0.0f);
+    
+    gl::color( Color::white() );
+    
+    // input layer
+    
+	mTextureFont->drawString( toString( waves[0].relativeStart ) + " Relative Delay L", Vec2f( 0, 0 ) );
+    mTextureFont->drawString( toString( waves[1].relativeStart ) + " Relative Delay R", Vec2f( 0, 50 ) );
+    mTextureFont->drawString( toString( floor(abs(waves[0].max)) ) + " Max Volume L", Vec2f( 0, 100 ) );
+    mTextureFont->drawString( toString( floor(abs(waves[1].max)) ) + " Max Volume R", Vec2f( 0, 150 ) );
+    mTextureFont->drawString( toString( floor(waves[0].aveFreq) ) + " Peak Frequency L", Vec2f( 0, 200 ) );
+    mTextureFont->drawString( toString( floor(waves[1].aveFreq) ) + " Peak Frequency R", Vec2f( 0, 250 ) );
+    
+    // output layer
+    
+    glTranslatef(700.0f, 0.0f, 0.0f);
+    
+    mTextureFont->drawString( toString( floor(waves[1].max) ) + " mm", Vec2f( 0, 0 ) );
+    mTextureFont->drawString( toString( floor(waves[1].aveFreq) ) + " Type", Vec2f( 0, 100 ) );
+    
+    glPopMatrix();
     
 }
 

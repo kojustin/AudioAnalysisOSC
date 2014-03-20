@@ -41,6 +41,7 @@ public:
     float tDelay;
     float delayThresh;
     int startIndex;
+    int relativeStart;
     cinder::Vec2f startPt;
     
     float max;
