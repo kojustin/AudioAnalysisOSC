@@ -8,6 +8,12 @@
 
 #include "Net.h"
 
+using namespace ci;
+
+Net::Net(){
+    // blank constructor
+}
+
 Net::Net( const vector<unsigned> &topology ){
     
     // creates the net with set layers and neurons
@@ -134,7 +140,54 @@ void Net::backProp( const vector<double> &targetVals){
         }
         
     }
-          
     
+}
+
+void Net::displayNet(){
+    
+    glPushMatrix();
+    glTranslatef(100.0f, 10.0f, 0.0f);
+    
+    // loop though layers
+    for  (unsigned layerNum = 0 ; layerNum < m_layers.size(); layerNum++){
+        
+        Layer &layer = m_layers[layerNum];
+        
+        glPushMatrix();
+        
+        gl::color(0.0f, 0.2f, 0.3f);
+        
+        // loop through neurons
+        if ( layerNum != m_layers.size()){
+            for (unsigned n = 0; n < layer.size(); n++){
+                glTranslatef(0.0f, 50.0f, 0.0f);
+                
+                for (unsigned c = 0; c < layer[n].m_outputWeights.size(); c++){
+                    
+                    gl::color(0.0f, 0.2f, 0.25f);
+                    gl::lineWidth( (float)layer[n].m_outputWeights[c].weight * 6);
+//                    gl::lineWidth( 1.0f);
+                    gl::drawLine( Vec2f( 0.0f, 0.0f ), Vec2f( 350.0f, 50.0f * c  - 50.0f * n) );
+                    
+                }
+                
+                // changes the color of the bias neurons
+                if ( n == layer.size()-1 ){
+                    gl::color(0.0f, 0.3f, 0.2f);
+                } else {
+                    gl::color(0.0f, 0.2f, 0.3f);
+                }
+                
+                gl::drawSolidEllipse(cinder::Vec2f(0.0f, 0.0f), 10.0f, 10.0f);
+                
+            }
+        }
+        glPopMatrix();
+        
+        glTranslatef(350.0f, 0.0f, 0.0f);
+    }
+    glPopMatrix();
+    
+    gl::lineWidth( 1.0f);
     
 }

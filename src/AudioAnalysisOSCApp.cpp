@@ -36,12 +36,15 @@ public:
     
     Boolean live;
     Boolean delay;
-    float tDelay;
+
     uint16_t  channels = 0;
     
     // Neural Net Variables ////////////////////////////////////////
     
     
+    Net myNet;
+    
+    vector<float> trainingSet;
     
     vector<unsigned> topology;
     
@@ -105,12 +108,15 @@ void AudioAnalysisOSCApp::setup()
     // v position
     // gesture type (positive one, negative the other)
     
-    topology.push_back(9);
+    topology.push_back(6);
     topology.push_back(12);
     topology.push_back(3);
                        
-    Net myNet(topology);
+    myNet = *new Net(topology);
     
+    for (unsigned i = 0; i < trainingSet.size(); i++){
+        trainingSet.push_back(i*5.0f);
+    }
     
     
 }
@@ -148,6 +154,8 @@ void AudioAnalysisOSCApp::draw()
     
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     gl::clear( Color( 0.1f, 0.1f, 0.1f ) );
+    
+    myNet.displayNet();
     
     glPushMatrix();
     glTranslatef(0.0f, getWindowHeight()/channels - 100.0f, 0.0f);

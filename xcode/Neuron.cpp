@@ -28,7 +28,7 @@ void Neuron::feedForward( const Layer &prevLayer){
     double sum = 0.0;
     
     // Sum the previous layer's outputs ( which are our inputs)
-    // Include the bias node from the precious layer.
+    // Include the bias node from the previous layer.
     
     for (unsigned n = 0; n < prevLayer.size(); n++){
         

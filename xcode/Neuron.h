@@ -40,6 +40,9 @@ public:
     void calcHiddenGradients(const Layer &nextLayer);
     void updateInputWeights( Layer &prevLayer);
     
+    // moved from private to be accessed from the Net::display function
+    std::vector<Connection> m_outputWeights;
+    
 private:
     static double eta; // [0.0 ... 1.0] overall training rate
     static double alpha; // [0.0 .. n] multiplier of last weight change, ie learning momentum
@@ -51,7 +54,7 @@ private:
     double sumDOW(const Layer &nextLayer) const;
     
     double m_outputVal;
-    std::vector<Connection> m_outputWeights;
+
     
     unsigned m_myIndex;
     double m_gradient;
