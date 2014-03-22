@@ -19,6 +19,8 @@
 
 using namespace ci;
 
+float Wave::delayThresh = 3.0f;
+
 Wave::Wave(){
     //blank contructor....not really sure why
 }
@@ -35,10 +37,9 @@ Wave::Wave( cinder::audio::Input mInput, cinder::audio::ChannelIdentifier _chann
     
 	delay = false;
     tDelay = 0.0f;
-    delayThresh = 3.0f;
     
     startIndex = 0;
-    relativeStart = 0;
+    relativeStart = 0.0f;
     startPt = * new Vec2f(0.0f, 0.0f);
     
     max = 0.0f;
@@ -118,8 +119,8 @@ void Wave::update( cinder::audio::Input mInput , uint32_t bufferSamples){
                 
                 // gather attack gradient information
                 
-                if (i < bufferSamples - 10){
-                    attack = abs( channelBuffer->mData[i]*amp - channelBuffer->mData[i+9]*amp);
+                if (i < bufferSamples - 20){
+                    attack = abs( channelBuffer->mData[i]*amp - channelBuffer->mData[i+19]*amp);
                 }
                 
             }
@@ -213,7 +214,11 @@ void Wave::drawFft( float height){
         glEnd();
         
     }
-    
+
+    if (peaked){
     aveFreq = freqIdx;
+    } else {
+        aveFreq = 0;
+    }
     
 }

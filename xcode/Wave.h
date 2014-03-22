@@ -39,7 +39,7 @@ public:
     // for start index
 	Boolean delay;
     float tDelay;
-    float delayThresh;
+    static float delayThresh;
     int startIndex;
     int relativeStart;
     cinder::Vec2f startPt;

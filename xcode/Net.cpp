@@ -35,11 +35,13 @@ Net::Net( const vector<unsigned> &topology ){
             
         }
         
+        // force the bias neuron to equal one
+        m_layers.back().back().setOutputVal(1.0f);
     }
     
 }
 
-void Net::getResults(vector<double> &resultVals) const{
+void Net::getResults(vector<float> &resultVals) const{
     
     resultVals.clear();
     
@@ -49,7 +51,7 @@ void Net::getResults(vector<double> &resultVals) const{
     
 }
 
-void Net::feedForward(const vector<double> &inputVals){
+void Net::feedForward(const vector<float> &inputVals){
     
     assert(inputVals.size() == m_layers[0].size() - 1);
     
@@ -80,16 +82,16 @@ void Net::feedForward(const vector<double> &inputVals){
 }
 
 
-void Net::backProp( const vector<double> &targetVals){
+void Net::backProp( const vector<float> &targetVals){
     
     // calculate overall net error (RMS of output neuron errors)
     
     Layer &outputLayer = m_layers.back();
-    m_error = 0.0;
+    m_error = 0.0f;
     
     for (unsigned n = 0; n < outputLayer.size() - 1; n++){
         
-        double delta = targetVals[n] - outputLayer[n].getOutputVal();
+        float delta = targetVals[n] - outputLayer[n].getOutputVal();
         m_error += delta * delta;
         
     }
@@ -124,7 +126,7 @@ void Net::backProp( const vector<double> &targetVals){
         
     }
     
-    // for al laters form outputs to first hidden lauer
+    // for all layers form outputs to first hidden layer
     // update connection weights
     
     for  (unsigned layerNum = m_layers.size() - 1; layerNum > 0; layerNum--){
@@ -161,10 +163,10 @@ void Net::displayNet(){
             for (unsigned n = 0; n < layer.size(); n++){
                 glTranslatef(0.0f, 50.0f, 0.0f);
                 
-                for (unsigned c = 0; c < layer[n].m_outputWeights.size(); c++){
+                for (unsigned c = 0; c < layer[n].getOutputWeights().size(); c++){
                     
                     gl::color(0.0f, 0.2f, 0.25f);
-                    gl::lineWidth( (float)layer[n].m_outputWeights[c].weight * 6);
+                    gl::lineWidth( (float)layer[n].getOutputWeights()[c].weight * 6);
 //                    gl::lineWidth( 1.0f);
                     gl::drawLine( Vec2f( 0.0f, 0.0f ), Vec2f( 350.0f, 50.0f * c  - 50.0f * n) );
                     

@@ -32,8 +32,8 @@ public:
 	void draw();
     void keyDown(KeyEvent e);
     
-    void teach(Net myNet, vector<double> inputVals, vector<double> targetVals);
-    void respond(Net myNet, vector<double> results);
+    void teach( vector<float> &inputVals, vector<float> &targetVals);
+    void respond( vector<float> &results );
     void displayTags();
     
     // Audio Variables ////////////////////////////////////////////
@@ -45,6 +45,7 @@ public:
     Wave waves [4];
     
     Boolean live;
+    Boolean pauseEnabled;
     Boolean delay;
 
     uint16_t  channels = 0;
@@ -53,15 +54,16 @@ public:
     
     Net myNet;
     
-    vector<float> trainingSet;
+    vector<vector<float>> trainingSet;
+    int trainingId;
     
     vector<unsigned> topology;
     
-    vector<double> inputVals;
+    vector<float> inputVals;
     
-    vector<double> targetVals;
+    vector<float> targetVals;
     
-    vector<double> resultVals;
+    vector<float> resultVals;
     
     Boolean teaching;
     
@@ -101,13 +103,13 @@ void AudioAnalysisOSCApp::setup()
     
     // initialise the Waves
     
-    waves[0] = *new Wave( mInput, audio::CHANNEL_FRONT_LEFT , 200.0f);
-    waves[1] = *new Wave( mInput, audio::CHANNEL_FRONT_RIGHT , 200.0f);
-    //    waves[2] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_LEFT );
-    //    waves[3] = *new Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
+    waves[0] =  Wave( mInput, audio::CHANNEL_FRONT_LEFT , 200.0f);
+    waves[1] =  Wave( mInput, audio::CHANNEL_FRONT_RIGHT , 200.0f);
+    //    waves[2] = Wave( mPcmBuffer, audio::CHANNEL_BACK_LEFT );
+    //    waves[3] = Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
     
     live = true;
-    
+    pauseEnabled = false;
     
     
     
@@ -123,21 +125,31 @@ void AudioAnalysisOSCApp::setup()
     // v position
     // gesture type (positive one, negative the other)
     
+    topology.push_back(2);
     topology.push_back(5);
-    topology.push_back(12);
+//    topology.push_back(5);
     topology.push_back(2);
                        
     myNet = *new Net(topology);
     
-    for (unsigned i = 0; i < trainingSet.size(); i++){
-        trainingSet.push_back(i*5.0f);
-    }
     
-    targetVals.push_back(30);
-    targetVals.push_back(3);
+    targetVals.push_back(1.0f);
+    targetVals.push_back(0.0f);
+    trainingSet.push_back(targetVals);
+    targetVals.clear();
+    
+    targetVals.push_back(0.0f);
+    targetVals.push_back(1.0f);
+    trainingSet.push_back(targetVals);
+    targetVals.clear();
+
+    
+    trainingId = 0;
     
     
     teaching = true;
+    
+    
     
     // Font Setup /////////////////////////////////////////////////////////////////
     
@@ -157,7 +169,7 @@ void AudioAnalysisOSCApp::update()
     uint32_t bufferSamples = mPcmBuffer->getSampleCount();
     
     // if the program is live, update the contents of the waves
-    if (live){
+    if (live || !pauseEnabled){
         for (int i = 0; i < channels; i++){
             waves[i].update(mInput, bufferSamples);
         }
@@ -185,24 +197,43 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
+    // sets inputVals of the network (currently for 2 channels)
+    
+    inputVals.push_back(waves[0].relativeStart);
+    inputVals.push_back(waves[1].relativeStart);
+//    inputVals.push_back(abs(waves[0].max));
+//    inputVals.push_back(abs(waves[1].max));
+//    inputVals.push_back(waves[0].attack);
+//    inputVals.push_back(waves[1].attack);
+    
     
     if (live){
+        
+        int peakCount = 0;
+        
         for (int i = 0; i < channels; i++){
             
             // pauses if any of the waves have gone over the threshold and either learn or respond
-            if (waves[i].peaked){
-                live = false;
-                
-                // make the network respond
-                
-                if (teaching) {
-                    //teach( myNet, inputVals, targetVals);
-                } else {
-                    //respond( myNet, resultVals );
-                }
+            if (waves[i].peaked) peakCount ++;
+
+        }
+        
+        if (peakCount > 0){
+            live = false;
+            
+            // make the network respond
+            
+            myNet.feedForward(inputVals);
+            
+            if (teaching) {
+                teach( inputVals, trainingSet[trainingId]);
+            } else {
+                respond( resultVals );
             }
         }
     }
+    
+    inputVals.clear();
     
 }
 
@@ -218,6 +249,8 @@ void AudioAnalysisOSCApp::draw()
     glPushMatrix();
     glTranslatef(0.0f, getWindowHeight()/channels - 100.0f, 0.0f);
     
+    // update the waves
+    
     for (int i = 0; i < channels; i++){
         
         waves[i].drawWave(& live);
@@ -227,6 +260,8 @@ void AudioAnalysisOSCApp::draw()
     }
     
     glPopMatrix();
+    
+    // find and draw the center offset
     
     float difference = waves[0].startIndex - waves[1].startIndex;
     Vec2f triangulate = Vec2f(getWindowWidth() * 0.5f + difference*(getWindowWidth() * 0.5f)/140.0f, getWindowHeight() * 0.5f);
@@ -242,6 +277,31 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
         live = true;
     }
     
+    if (e.getChar() == 'q') {
+        teaching = !teaching;
+    }
+    if (e.getChar() == 'a') {
+        pauseEnabled = !pauseEnabled;
+    }
+    
+    if (e.getChar() == '-') {
+        Wave::delayThresh *= 0.5f;
+    }
+    
+    if (e.getChar() == '=') {
+        Wave::delayThresh *= 2.0f;
+    }
+    
+    if (e.getChar() == '1') {
+        trainingId = 0;;
+    }
+    if (e.getChar() == '2') {
+        trainingId = 1;
+    }
+    if (e.getChar() == '3') {
+        trainingId = 2;
+    }
+    
     if (e.getChar() == 'f') {
         console() << "freq: " << waves[0].aveFreq << std::endl;
         console() << "max: " << waves[0].max << std::endl;
@@ -251,14 +311,14 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
     
 }
 
-void AudioAnalysisOSCApp::teach(Net myNet, vector<double> inputVals, vector<double> targetVals){
+void AudioAnalysisOSCApp::teach( vector<float> &inputVals, vector<float> &targetVals){
     
-    myNet.feedForward(inputVals);
+    myNet.getResults(resultVals); // this function is just to test, if its necessary add a proper argument to the resultVals
     myNet.backProp(targetVals);
     
 }
 
-void AudioAnalysisOSCApp::respond(Net myNet, vector<double> results){
+void AudioAnalysisOSCApp::respond( vector<float> &results){
     
     myNet.getResults(results);
     
@@ -277,15 +337,21 @@ void AudioAnalysisOSCApp::displayTags(){
     mTextureFont->drawString( toString( waves[1].relativeStart ) + " Relative Delay R", Vec2f( 0, 50 ) );
     mTextureFont->drawString( toString( floor(abs(waves[0].max)) ) + " Max Volume L", Vec2f( 0, 100 ) );
     mTextureFont->drawString( toString( floor(abs(waves[1].max)) ) + " Max Volume R", Vec2f( 0, 150 ) );
-    mTextureFont->drawString( toString( floor(waves[0].aveFreq) ) + " Peak Frequency L", Vec2f( 0, 200 ) );
-    mTextureFont->drawString( toString( floor(waves[1].aveFreq) ) + " Peak Frequency R", Vec2f( 0, 250 ) );
+    mTextureFont->drawString( toString( floor(waves[0].attack) ) + " Attack L", Vec2f( 0, 200 ) );
+    mTextureFont->drawString( toString( floor(waves[1].attack) ) + " Attack R", Vec2f( 0, 250 ) );
     
     // output layer
     
     glTranslatef(700.0f, 0.0f, 0.0f);
     
-    mTextureFont->drawString( toString( floor(waves[1].max) ) + " mm", Vec2f( 0, 0 ) );
-    mTextureFont->drawString( toString( floor(waves[1].aveFreq) ) + " Type", Vec2f( 0, 100 ) );
+    if (resultVals.size() > 0){
+    mTextureFont->drawString( toString( resultVals[0] ) + " mm", Vec2f( 0, 0 ) );
+//    mTextureFont->drawString( toString( resultVals[1] ) + " Type", Vec2f( 0, 50 ) );
+    }
+    
+    if (pauseEnabled) mTextureFont->drawString( "Pausing Enabled", Vec2f( 150.0f, 0.0f ) );
+    if (pauseEnabled) mTextureFont->drawString( toString(Wave::delayThresh / 3.0f) + "sec delayTime", Vec2f( 150.0f, 40.0f ) );
+    
     
     glPopMatrix();
     

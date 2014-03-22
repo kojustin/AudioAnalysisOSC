@@ -23,8 +23,8 @@ typedef std::vector<Neuron> Layer;
 
 struct Connection{
     
-    double weight;
-    double deltaWeight;
+    float weight;
+    float deltaWeight;
     
 };
 
@@ -33,34 +33,34 @@ class Neuron{
     
 public:
     Neuron(unsigned numOutputs, unsigned myIndex);
-    void setOutputVal(double val) { m_outputVal = val; }
-    double getOutputVal(void) const { return m_outputVal; }
+    void setOutputVal(float val) { m_outputVal = val; }
+    float getOutputVal(void) const { return m_outputVal; }
+    std::vector<Connection> getOutputWeights() const { return m_outputWeights; };
     void feedForward(const Layer &prevLayer);
-    void calcOutputGradients(double targetVal);
+    void calcOutputGradients(float targetVal);
     void calcHiddenGradients(const Layer &nextLayer);
     void updateInputWeights( Layer &prevLayer);
     
     // moved from private to be accessed from the Net::display function
-    std::vector<Connection> m_outputWeights;
+    //std::vector<Connection> m_outputWeights;
     
 private:
-    static double eta; // [0.0 ... 1.0] overall training rate
-    static double alpha; // [0.0 .. n] multiplier of last weight change, ie learning momentum
     
     // function for returning a random weight (needs the include-<cstdlib>
-    static double randomWeight(void){ return rand()/double(RAND_MAX); }
-    static double transferFunction(double x);
-    static double transferFunctionDerivative(double x);
-    double sumDOW(const Layer &nextLayer) const;
+    static float randomWeight(void){ return rand()/float(RAND_MAX); }
+    static float transferFunction(float x);
+    static float transferFunctionDerivative(float x);
+    float sumDOW(const Layer &nextLayer) const;
     
-    double m_outputVal;
+    float m_outputVal;
 
+    std::vector<Connection> m_outputWeights;
     
     unsigned m_myIndex;
-    double m_gradient;
+    float m_gradient;
+    
+    float eta; // [0.0 ... 1.0] overall training rate
+    float alpha; // [0.0 .. n] multiplier of last weight change, ie learning momentum
     
 };
-
-double Neuron::eta = 0.15;
-double Neuron::alpha = 0.5;
 

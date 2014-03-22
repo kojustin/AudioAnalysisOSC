@@ -20,15 +20,15 @@ class Net{
 public:
     Net();
     Net( const vector<unsigned> &topology);
-    void feedForward( const vector<double> &inputVals);
-    void backProp( const vector<double> &targetVals);
-    void getResults(vector<double> &resultVals) const;
+    void feedForward( const vector<float> &inputVals);
+    void backProp( const vector<float> &targetVals);
+    void getResults(vector<float> &resultVals) const;
     
     void displayNet();
     
 private:
     vector<Layer> m_layers; // m_layers[layerNum][neuroNum]
-    double m_error;
-    double m_recentAverageError;
-    double m_recentAverageSmoothingFactor;
+    float m_error;
+    float m_recentAverageError;
+    float m_recentAverageSmoothingFactor;
 };
