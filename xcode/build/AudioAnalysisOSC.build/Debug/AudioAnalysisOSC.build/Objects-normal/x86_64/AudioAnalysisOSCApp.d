@@ -162,5 +162,4 @@ dependencies: \
   ../../../cinder_0.8.5_mac/boost/boost/container/container_fwd.hpp \
   /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.h \
   ../../../cinder_0.8.5_mac/include/cinder/audio/Input.h \
-  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Net.h \
-  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Neuron.h
+  /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Tap.h

@@ -96,11 +96,13 @@ void Wave::update( cinder::audio::Input mInput , uint32_t bufferSamples){
         // find start point of transient
         // and record index at start point
         
-        if (i > 50 && delay == false){
+        if (i > 100 && i < 2000 && delay == false){
             
             int count = 0;
             
-            for (int j = 5; j < 50; j+=5){
+            // makes sure all the previous n indexes are flat (count must be 0 to proceed);
+            
+            for (int j = 5; j < 100; j+=10){
                 if (abs(channelBuffer->mData[i-j]*amp) > 2) count++;
             }
             
@@ -147,7 +149,7 @@ void Wave::drawWave(Boolean * live){
     
     // timer for transient stops
     
-    if (delay) tDelay += 0.1f;
+    if (delay || peaked) tDelay += 0.1f;
     if (tDelay > delayThresh){
         delay = false;
         tDelay = 0.0f;
@@ -172,11 +174,12 @@ void Wave::drawWave(Boolean * live){
     // set colour white and draw start point
     
     if (* live == false){
-    gl::color(1.0f, 1.0f, 1.0f);
-    
-    gl::drawSolidEllipse(startPt, 3.0f, 3.0f);
+        
+        gl::color(1.0f, 1.0f, 1.0f);
+        
+        gl::drawSolidEllipse(startPt, 3.0f, 3.0f);
+        
     }
-    
 }
 
 void Wave::drawFft( float height){
@@ -184,7 +187,7 @@ void Wave::drawFft( float height){
     if( ! pcmBuffer ) {
         return;
     }
-
+    
     float bottom = 0.0f;
     
     if( ! mFftDataRef ) {
@@ -214,9 +217,9 @@ void Wave::drawFft( float height){
         glEnd();
         
     }
-
+    
     if (peaked){
-    aveFreq = freqIdx;
+        aveFreq = freqIdx;
     } else {
         aveFreq = 0;
     }

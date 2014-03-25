@@ -15,10 +15,10 @@ typedef ci::app::AppBasic AppBase;
 
 //#include "cinder/audio/Input.h"
 //#include <iostream>
-//#include <vector>
+#include <vector>
 
 #include "Wave.h"
-#include "Net.h"
+#include "Tap.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -32,9 +32,8 @@ public:
 	void draw();
     void keyDown(KeyEvent e);
     
-    void teach( vector<float> &inputVals, vector<float> &targetVals);
-    void respond( vector<float> &results );
-    void displayTags();
+    void displayText();
+    void checkLookup(std::vector<int> &results, int a, int b, int c, int d , int res);
     
     // Audio Variables ////////////////////////////////////////////
     
@@ -47,30 +46,23 @@ public:
     Boolean live;
     Boolean pauseEnabled;
     Boolean delay;
-
+    
     uint16_t  channels = 0;
     
-    // Neural Net Variables ////////////////////////////////////////
-    
-    Net myNet;
-    
-    vector<vector<float>> trainingSet;
-    int trainingId;
-    
-    vector<unsigned> topology;
-    
-    vector<float> inputVals;
-    
-    vector<float> targetVals;
-    
-    vector<float> resultVals;
-    
-    Boolean teaching;
+    const static int resolution = 100;
+    float lookup [resolution][resolution][4];
     
     // Font Setup ///////////////////////////////////////////////////
     
     Font				mFont;
 	gl::TextureFontRef	mTextureFont;
+    
+    // Graphics Setup ///////////////////////////////////////////////
+    
+    std::vector<Tap> taps;
+    float fade = 0.0f;
+    float xScale = 1.0f;
+    float yScale = 1.0f;
     
     
 };
@@ -105,50 +97,44 @@ void AudioAnalysisOSCApp::setup()
     
     waves[0] =  Wave( mInput, audio::CHANNEL_FRONT_LEFT , 200.0f);
     waves[1] =  Wave( mInput, audio::CHANNEL_FRONT_RIGHT , 200.0f);
-    //    waves[2] = Wave( mPcmBuffer, audio::CHANNEL_BACK_LEFT );
-    //    waves[3] = Wave( mPcmBuffer, audio::CHANNEL_BACK_RIGHT );
+    waves[2] = Wave( mInput, audio::CHANNEL_BACK_LEFT, 200.0f );
+    waves[3] = Wave( mInput, audio::CHANNEL_BACK_RIGHT, 200.0f );
     
     live = true;
     pauseEnabled = false;
     
     
+    // generate lookup table
     
-    // Neural Net Setup ////////////////////////////////////////////////////////////
-    
-    // there will be 9 inputs to the network
-    // the 4 relative positions of the transients
-    // the 4 max volumes
-    // and the average frequency
-    
-    // the 3 outputs are
-    // u position
-    // v position
-    // gesture type (positive one, negative the other)
-    
-    topology.push_back(2);
-    topology.push_back(5);
-//    topology.push_back(5);
-    topology.push_back(2);
-                       
-    myNet = *new Net(topology);
-    
-    
-    targetVals.push_back(1.0f);
-    targetVals.push_back(0.0f);
-    trainingSet.push_back(targetVals);
-    targetVals.clear();
-    
-    targetVals.push_back(0.0f);
-    targetVals.push_back(1.0f);
-    trainingSet.push_back(targetVals);
-    targetVals.clear();
-
-    
-    trainingId = 0;
-    
-    
-    teaching = true;
-    
+    for (int x = 0; x < 100; x++){
+        for (int y = 0; y < 100; y++){
+            
+            // note the sqrts ipmlicitly convert an int to a double so (float) is required
+            
+            lookup[x][y][0] = (float)sqrt(x*x + y*y);
+            lookup[x][y][1] = (float)sqrt( (resolution - x)*(resolution - x) + y*y);
+            lookup[x][y][2] = (float)sqrt( (resolution - x)*(resolution - x) + (resolution - y)*(resolution - y) );
+            lookup[x][y][3] = (float)sqrt( x*x + (resolution - y)*(resolution - y) );
+            
+            // find index that was the smallest value
+            
+            int s = 0;
+            int minIdx = resolution;
+            
+            for (int i = 0; i < 4; i++){
+                if (lookup[x][y][i] < minIdx){
+                    minIdx = lookup[x][y][i];
+                    s = i;
+                }
+            }
+            
+            // subtract it from the others to get relative value
+            
+            for (int i = 0; i < 4; i++){
+                lookup[x][y][i] -= lookup[x][y][s];
+            }
+        }
+    }
     
     
     // Font Setup /////////////////////////////////////////////////////////////////
@@ -197,57 +183,44 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
-    // sets inputVals of the network (currently for 2 channels)
-    
-    inputVals.push_back(waves[0].relativeStart);
-    inputVals.push_back(waves[1].relativeStart);
-//    inputVals.push_back(abs(waves[0].max));
-//    inputVals.push_back(abs(waves[1].max));
-//    inputVals.push_back(waves[0].attack);
-//    inputVals.push_back(waves[1].attack);
-    
+    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
+    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
+    Vec2f pos = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
     
     if (live){
         
         int peakCount = 0;
         
+        // check to see if any of the waves have peaked
+        
         for (int i = 0; i < channels; i++){
             
-            // pauses if any of the waves have gone over the threshold and either learn or respond
             if (waves[i].peaked) peakCount ++;
-
+            
         }
         
         if (peakCount > 0){
             live = false;
             
-            // make the network respond
+            // create new tap
             
-            myNet.feedForward(inputVals);
-            
-            if (teaching) {
-                teach( inputVals, trainingSet[trainingId]);
-            } else {
-                respond( resultVals );
-            }
+            taps.push_back( Tap( pos, abs(waves[s].max) ));
         }
     }
     
-    inputVals.clear();
+//    int diff = abs(waves[0].startIndex - waves[1].startIndex);
+//    assert( diff < 5 );
     
 }
 
 void AudioAnalysisOSCApp::draw()
 {
     
-    
     gl::setMatricesWindow( getWindowWidth(), getWindowHeight() );
     gl::clear( Color( 0.1f, 0.1f, 0.1f ) );
     
-    myNet.displayNet();
-    
     glPushMatrix();
-    glTranslatef(0.0f, getWindowHeight()/channels - 100.0f, 0.0f);
+    glTranslatef(0.0f, 0.5f*getWindowHeight()/channels , 0.0f);
     
     // update the waves
     
@@ -256,18 +229,51 @@ void AudioAnalysisOSCApp::draw()
         waves[i].drawWave(& live);
         waves[i].drawFft(2000.0f);
         
-        glTranslatef(0.0f, 200.0f, 0.0f);
+        glTranslatef(0.0f, getWindowHeight()/channels, 0.0f);
     }
     
     glPopMatrix();
     
+    // draw the time bars
+    
+    gl::color(0.0f, 0.3f, 0.4f);
+    
+    for (int i = 0; i < channels; i++){
+        gl::drawLine( Vec2f(waves[i].startPt.x, 0.0f), Vec2f(waves[i].startPt.x, cinder::app::getWindowHeight()) );
+        gl::drawLine( Vec2f(0.0f, waves[i].startPt.y), Vec2f(cinder::app::getWindowWidth(), waves[i].startPt.y) );
+    }
+    
+    // fade out the background
+    
+    Rectf fadeMask = Rectf( Vec2f(0.0f, 0.0f), Vec2f(getWindowWidth(), getWindowHeight()));
+    
+    gl::color( 0.0f, 0.0f, 0.0f, fade );
+    gl::drawSolidRect(fadeMask);
+    
+    // display all taps
+    
+    std::vector<int> removals;
+    
+    for ( unsigned i = 0; i < taps.size(); i++ ){
+        taps[i].run();
+        
+        if (taps[i].t > 1) removals.push_back( i );
+    }
+    
+    for ( unsigned i = 0; i < removals.size(); i++ ){
+        taps.erase( taps.begin()+removals[i] );
+    }
+    
     // find and draw the center offset
     
-    float difference = waves[0].startIndex - waves[1].startIndex;
-    Vec2f triangulate = Vec2f(getWindowWidth() * 0.5f + difference*(getWindowWidth() * 0.5f)/140.0f, getWindowHeight() * 0.5f);
+    gl::color(0.0f, 0.5f, 0.6f);
+    
+    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
+    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
+    Vec2f triangulate = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
     gl::drawSolidEllipse(triangulate, 10, 10);
     
-    displayTags();
+    displayText();
 }
 
 
@@ -277,9 +283,6 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
         live = true;
     }
     
-    if (e.getChar() == 'q') {
-        teaching = !teaching;
-    }
     if (e.getChar() == 'a') {
         pauseEnabled = !pauseEnabled;
     }
@@ -292,14 +295,12 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
         Wave::delayThresh *= 2.0f;
     }
     
-    if (e.getChar() == '1') {
-        trainingId = 0;;
+    if (e.getChar() == 'x') {
+        xScale = getWindowWidth()*0.5/abs(waves[0].startIndex - waves[1].startIndex);
     }
-    if (e.getChar() == '2') {
-        trainingId = 1;
-    }
-    if (e.getChar() == '3') {
-        trainingId = 2;
+    
+    if (e.getChar() == 'y') {
+        yScale = getWindowHeight()*0.5/abs(waves[2].startIndex - waves[3].startIndex);
     }
     
     if (e.getChar() == 'f') {
@@ -311,51 +312,60 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
     
 }
 
-void AudioAnalysisOSCApp::teach( vector<float> &inputVals, vector<float> &targetVals){
-    
-    myNet.getResults(resultVals); // this function is just to test, if its necessary add a proper argument to the resultVals
-    myNet.backProp(targetVals);
-    
-}
-
-void AudioAnalysisOSCApp::respond( vector<float> &results){
-    
-    myNet.getResults(results);
-    
-}
-
-void AudioAnalysisOSCApp::displayTags(){
+void AudioAnalysisOSCApp::displayText(){
     
     glPushMatrix();
-    glTranslatef(110.0f, 60.0f, 0.0f);
+    
+    glTranslatef(20.0f, 0.5f*getWindowHeight()/channels + 15.0f, 0.0f);
     
     gl::color( Color::white() );
     
     // input layer
     
-	mTextureFont->drawString( toString( waves[0].relativeStart ) + " Relative Delay L", Vec2f( 0, 0 ) );
-    mTextureFont->drawString( toString( waves[1].relativeStart ) + " Relative Delay R", Vec2f( 0, 50 ) );
-    mTextureFont->drawString( toString( floor(abs(waves[0].max)) ) + " Max Volume L", Vec2f( 0, 100 ) );
-    mTextureFont->drawString( toString( floor(abs(waves[1].max)) ) + " Max Volume R", Vec2f( 0, 150 ) );
-    mTextureFont->drawString( toString( floor(waves[0].attack) ) + " Attack L", Vec2f( 0, 200 ) );
-    mTextureFont->drawString( toString( floor(waves[1].attack) ) + " Attack R", Vec2f( 0, 250 ) );
+    glPushMatrix();
+    
+    for (unsigned w = 0; w < channels; w++){
+        mTextureFont->drawString(  "Relative Delay: " + toString(waves[w].relativeStart ), Vec2f( 0, 0 ) );
+        mTextureFont->drawString(  "Max Volume: " + toString(floor(abs(waves[w].max)) ), Vec2f( 0, 15 ) );
+        mTextureFont->drawString(  "Average Freq Band: " + toString(floor(abs(waves[w].aveFreq)) ), Vec2f( 0, 30 ) );
+        mTextureFont->drawString(  "Attack: " + toString(floor(abs(waves[w].attack)) ), Vec2f( 0, 45 ) );
+        
+        glTranslatef(0.0f, getWindowHeight()/channels, 0.0f);
+    }
+    glPopMatrix();
     
     // output layer
     
-    glTranslatef(700.0f, 0.0f, 0.0f);
+    glTranslatef(950.0f, -50.0f, 0.0f);
     
-    if (resultVals.size() > 0){
-    mTextureFont->drawString( toString( resultVals[0] ) + " mm", Vec2f( 0, 0 ) );
-//    mTextureFont->drawString( toString( resultVals[1] ) + " Type", Vec2f( 0, 50 ) );
-    }
     
     if (pauseEnabled) mTextureFont->drawString( "Pausing Enabled", Vec2f( 150.0f, 0.0f ) );
-    if (pauseEnabled) mTextureFont->drawString( toString(Wave::delayThresh / 3.0f) + "sec delayTime", Vec2f( 150.0f, 40.0f ) );
+    if (pauseEnabled) mTextureFont->drawString( toString(Wave::delayThresh / 3.0f) + "sec delayTime", Vec2f( 150.0f, 15.0f ) );
     
     
     glPopMatrix();
     
 }
+
+void AudioAnalysisOSCApp::checkLookup(std::vector<int> &results, int a, int b, int c, int d, int res){
+    
+    for (int x = 0; x < 100; x++){
+        for (int y = 0; y < 100; y++){
+            
+            if (lookup[x][y][0] - a < res*0.5 &&
+                lookup[x][y][1] - b < res*0.5 &&
+                lookup[x][y][2] - c < res*0.5 &&
+                lookup[x][y][3] - d < res*0.5){
+                
+                results.push_back(x);
+                results.push_back(y);
+                
+            }
+        }
+    }
+}
+
+
 
 CINDER_APP_BASIC( AudioAnalysisOSCApp, RendererGl )
 
