@@ -443,9 +443,9 @@ t1394539046
 s459637
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp
-c00000000532F25340000000000002248
-t1395598644
-s8776
+c0000000053316C270000000000002ABE
+t1395747879
+s10942
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/AudioAnalysisOSC_Prefix.pch
 c0000000053249FA0000000000000012E
@@ -556,8 +556,8 @@ t1395587048
 s2263
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o
-t1395598646
-s2289820
+t1395747882
+s2300464
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/IpEndpointName.o
 t1395505604
@@ -622,7 +622,7 @@ t1395599029
 s2119068
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/AudioAnalysisOSC.app
-t1395598647
+t1395747740
 s102
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/AudioAnalysisOSC.app/Contents/Info.plist
@@ -630,8 +630,8 @@ t1394624573
 s1509
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC
-t1395599030
-s3562240
+t1395747882
+s3567048
 
 N/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/AudioAnalysisOSC.app/Contents/PkgInfo
 t1394624573
@@ -5432,7 +5432,7 @@ r0
 
 CCheck dependencies
 r0
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies323989345edfb841^fd8289345edfb841^---0#1#1#--18"Check dependencies36"7A18306B-36AF-4C1A-BDD8-76A4066E6571-
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependenciesff06dda8a3e1b841^006fdda8a3e1b841^---0#1#1#--18"Check dependencies36"FA1CB497-69E8-4DCD-9605-6BBA76F91307-
 
 CCompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/i386/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
 s416273441.459538
@@ -5828,8 +5828,8 @@ lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compile
 b2B0A6FF4-599C-4697-83C2-F467BC961F4E
 
 CCompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler
-s417291445.327455
-e417291446.829319
+s417440680.873860
+e417440682.421859
 r1
 xCompileC
 x./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o
@@ -6002,8 +6002,8 @@ d/Users/felixfaire/Developer/cinder_0.8.5_mac/boost/boost/container/container_fw
 d/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Wave.h
 d/Users/felixfaire/Developer/cinder_0.8.5_mac/include/cinder/audio/Input.h
 d/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Tap.h
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compile /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp262"CompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler82e653b55cdfb841^904fd4b65cdfb841^---0#0#1#-19%DVTDocumentLocation2@94"file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp0000000000000000^3571"CompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch x86_64 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-generated-files.hmap -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-own-target-headers.hmap -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-all-target-headers.hmap -iquote /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-project-headers.hmap -iquote../../../cinder_0.8.5_mac/include -iquote../include -iquote../../../cinder_0.8.5_mac/blocks/OSC/src -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/include -I../../../cinder_0.8.5_mac/boost -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/DerivedSources/x86_64 -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/DerivedSources -F/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -include /var/folders/j0/sw3l2jkn2_qgzwrvbsgp8ldh0000gn/C/com.apple.DeveloperTools/5.0.2-5A3005/Xcode/SharedPrecompiledHeaders/AudioAnalysisOSC_Prefix-cpkyxrcfjsmgxohbyimfrlcdryhn/AudioAnalysisOSC_Prefix.pch -MMD -MT dependencies -MF /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.d --serialize-diagnostics /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.dia -c /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp -o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o36"D9E219B0-2815-4917-B7CF-FFF846E3F0DD-
-b5D5220A8-E7DF-4FE9-8895-0DA8BC2E5B65
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compile /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp262"CompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compilerabcddfa8a3e1b841^86006caaa3e1b841^---0#0#1#-19%DVTDocumentLocation2@94"file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp0000000000000000^3571"CompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    setenv LANG en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch x86_64 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-generated-files.hmap -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-own-target-headers.hmap -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-all-target-headers.hmap -iquote /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/AudioAnalysisOSC-project-headers.hmap -iquote../../../cinder_0.8.5_mac/include -iquote../include -iquote../../../cinder_0.8.5_mac/blocks/OSC/src -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/include -I../../../cinder_0.8.5_mac/boost -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/DerivedSources/x86_64 -I/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/DerivedSources -F/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -include /var/folders/j0/sw3l2jkn2_qgzwrvbsgp8ldh0000gn/C/com.apple.DeveloperTools/5.0.2-5A3005/Xcode/SharedPrecompiledHeaders/AudioAnalysisOSC_Prefix-cpkyxrcfjsmgxohbyimfrlcdryhn/AudioAnalysisOSC_Prefix.pch -MMD -MT dependencies -MF /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.d --serialize-diagnostics /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.dia -c /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp -o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSCApp.o36"28C63C2E-D011-424B-8295-DC4B9394CDFF-
+b826A5165-2EF3-4D32-9AA9-18485DC1E55E
 
 CCompileC ./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/IpEndpointName.o /Users/felixfaire/Developer/cinder_0.8.5_mac/blocks/OSC/src/ip/IpEndpointName.cpp normal x86_64 c++ com.apple.compilers.llvm.clang.1_0.compiler
 s417198403.058522
@@ -6596,8 +6596,8 @@ lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection137"Link /
 b9AB0808C-E00C-4720-B1FA-5FE606FD74FC
 
 CLd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC normal x86_64
-s417291829.672799
-e417291830.221632
+s417440682.423924
+e417440682.967761
 r1
 xLd
 x/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC
@@ -6631,13 +6631,13 @@ d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libc++.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libSystem.dylib
 d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.0/lib/darwin/libclang_rt.osx.a
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework/AppKit
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreData.framework/CoreData
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vImage.framework/Versions/A/vImage
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/vecLib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvDSP.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework/AppKit
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreData.framework/CoreData
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libcache.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libcommonCrypto.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libcompiler_rt.dylib
@@ -6668,11 +6668,11 @@ d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libunc.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libunwind.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/system/libxpc.dylib
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices
-d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Foundation.framework/Foundation
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvMisc.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ApplicationServices.framework/ApplicationServices
+d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Foundation.framework/Foundation
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreText.framework/CoreText
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/ImageIO.framework/ImageIO
@@ -6694,8 +6694,8 @@ d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/LaunchServices
 d/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/DictionaryServices.framework/Versions/A/DictionaryServices
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection137"Link /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC83"Ld ./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC normal x86_645649ac355edfb841^2fbe38365edfb841^---0#0#1#--1381"Ld ./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC normal x86_64    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    setenv MACOSX_DEPLOYMENT_TARGET 10.7    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -L/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -F/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -filelist /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSC.LinkFileList -mmacosx-version-min=10.7 -dead_strip ../../../cinder_0.8.5_mac/lib/libcinder_d.a -stdlib=libc++ -framework Cocoa -framework OpenGL -framework CoreVideo -framework QTKit -framework Accelerate -framework AudioToolbox -framework AudioUnit -framework CoreAudio -Xlinker -dependency_info -Xlinker /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSC_dependency_info.dat -o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC36"07122BD1-2444-44DB-A2FB-2E639C561D39-
-bF36AAE7A-CAA0-4975-AB07-F102A55EF86A
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection137"Link /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC83"Ld ./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC normal x86_647d916caaa3e1b841^1ac0f7aaa3e1b841^---0#0#1#--1381"Ld ./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC normal x86_64    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    setenv MACOSX_DEPLOYMENT_TARGET 10.7    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -arch x86_64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -L/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -F/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug -filelist /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSC.LinkFileList -mmacosx-version-min=10.7 -dead_strip ../../../cinder_0.8.5_mac/lib/libcinder_d.a -stdlib=libc++ -framework Cocoa -framework OpenGL -framework CoreVideo -framework QTKit -framework Accelerate -framework AudioToolbox -framework AudioUnit -framework CoreAudio -Xlinker -dependency_info -Xlinker /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/AudioAnalysisOSC.build/Debug/AudioAnalysisOSC.build/Objects-normal/x86_64/AudioAnalysisOSC_dependency_info.dat -o /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app/Contents/MacOS/AudioAnalysisOSC36"70FC8121-1F65-447F-9772-3F7BE3F32524-
+b826A5165-2EF3-4D32-9AA9-18485DC1E55E
 
 CProcessInfoPlistFile /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/build/Debug/AudioAnalysisOSC.app/Contents/Info.plist /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/Info.plist
 s416317373.983271
@@ -9944,11 +9944,11 @@ lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection38"Precomp
 b6F8CE382-0DE8-490B-A1B5-27A3FFFC7608
 
 CTouch /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app
-s417291830.222392
-e417291830.225716
+s417440682.968498
+e417440682.971735
 r1
 xTouch
 x/Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app
-lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection106"Touch /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app40"Touch ./build/Debug/AudioAnalysisOSC.app77f738365edfb841^f7c939365edfb841^---0#0#1#--237"Touch ./build/Debug/AudioAnalysisOSC.app    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    /usr/bin/touch -c /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app36"4EF5277D-0678-4A82-A2DF-70B7C82E0F37-
-bF36AAE7A-CAA0-4975-AB07-F102A55EF86A
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection106"Touch /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app40"Touch ./build/Debug/AudioAnalysisOSC.appe0f7f7aaa3e1b841^22c5f8aaa3e1b841^---0#0#1#--237"Touch ./build/Debug/AudioAnalysisOSC.app    cd /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode    /usr/bin/touch -c /Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/xcode/./build/Debug/AudioAnalysisOSC.app36"5EF1970D-3E40-4F7E-9745-763ED744A4B0-
+b826A5165-2EF3-4D32-9AA9-18485DC1E55E
 

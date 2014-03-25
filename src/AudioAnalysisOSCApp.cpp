@@ -183,9 +183,25 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
-    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
-    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
-    Vec2f pos = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
+//    // this is SO wrong but gives quick dirty results near center
+//    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
+//    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
+//    Vec2f pos = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
+    
+    // arranges time data and finds pos in lookup table
+    // the time values must be scaled to the resolution of the lookup table
+    // the current program assumes a square arrangement and only uses xScale
+    
+    int a = waves[0].relativeStart*resolution/xScale;
+    int b = waves[1].relativeStart*resolution/xScale;
+    int c = waves[2].relativeStart*resolution/xScale;
+    int d = waves[3].relativeStart*resolution/xScale;
+    
+    std::vector<int> posVals;
+    
+    checkLookup(posVals, a, b, c, d, resolution);
+    
+    Vec2f pos = Vec2f( (float)posVals[0], (float)posVals[1]);
     
     if (live){
         
