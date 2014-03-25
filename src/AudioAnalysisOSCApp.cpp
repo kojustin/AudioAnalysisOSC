@@ -49,8 +49,11 @@ public:
     
     uint16_t  channels = 0;
     
-    const static int resolution = 100;
-    float lookup [resolution][resolution][4];
+    int something = 2;
+    
+    const static int resolutionX = 100;
+    const static int resolutionY = 100;
+    float lookup [resolutionX][resolutionY][4];
     
     // Font Setup ///////////////////////////////////////////////////
     
@@ -112,14 +115,14 @@ void AudioAnalysisOSCApp::setup()
             // note the sqrts ipmlicitly convert an int to a double so (float) is required
             
             lookup[x][y][0] = (float)sqrt(x*x + y*y);
-            lookup[x][y][1] = (float)sqrt( (resolution - x)*(resolution - x) + y*y);
-            lookup[x][y][2] = (float)sqrt( (resolution - x)*(resolution - x) + (resolution - y)*(resolution - y) );
-            lookup[x][y][3] = (float)sqrt( x*x + (resolution - y)*(resolution - y) );
+            lookup[x][y][1] = (float)sqrt( (resolutionX - x)*(resolutionX - x) + y*y);
+            lookup[x][y][2] = (float)sqrt( (resolutionX - x)*(resolutionX - x) + (resolutionY - y)*(resolutionY - y) );
+            lookup[x][y][3] = (float)sqrt( x*x + (resolutionY - y)*(resolutionY - y) );
             
             // find index that was the smallest value
             
             int s = 0;
-            int minIdx = resolution;
+            int minIdx = resolutionX*3;  // this assumes that the aspect ratio will never exceed 3:1 change this if needed
             
             for (int i = 0; i < 4; i++){
                 if (lookup[x][y][i] < minIdx){
@@ -190,16 +193,17 @@ void AudioAnalysisOSCApp::update()
     
     // arranges time data and finds pos in lookup table
     // the time values must be scaled to the resolution of the lookup table
-    // the current program assumes a square arrangement and only uses xScale
+    // the hypoteneuse of the real grid is scaled to the hypoteneuse of the lookup grid
     
-    int a = waves[0].relativeStart*resolution/xScale;
-    int b = waves[1].relativeStart*resolution/xScale;
-    int c = waves[2].relativeStart*resolution/xScale;
-    int d = waves[3].relativeStart*resolution/xScale;
+    float scale = sqrt(resolutionX*resolutionX + resolutionY*resolutionY )/sqrt(xScale*xScale + yScale*yScale);
+    int a = waves[0].relativeStart* scale;
+    int b = waves[1].relativeStart* scale;
+    int c = waves[2].relativeStart* scale;
+    int d = waves[3].relativeStart* scale;
     
     std::vector<int> posVals;
     
-    checkLookup(posVals, a, b, c, d, resolution);
+    checkLookup(posVals, a, b, c, d, resolutionX); // uses the largest resolution (default x) for distance measurement
     
     Vec2f pos = Vec2f( (float)posVals[0], (float)posVals[1]);
     
@@ -224,6 +228,7 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
+    // this is a check for the laptop mic input difference between channel arrival times (it should be zero)
 //    int diff = abs(waves[0].startIndex - waves[1].startIndex);
 //    assert( diff < 5 );
     
