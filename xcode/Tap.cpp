@@ -25,7 +25,7 @@ Tap::Tap( Vec2f _pos, float _size ){
 
 void Tap::run(){
     
-    gl::color( 0.0f, 0.4f, 0.7f, 1.0f-t );
+    gl::color( 1.0f, 1.0f, 1.0f, 1.0f-t );
     
     gl::lineWidth(size*0.25f - size*0.25f*t);
     gl::drawStrokedCircle( pos, 10 + size*t );

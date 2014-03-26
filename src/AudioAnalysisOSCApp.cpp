@@ -33,7 +33,7 @@ public:
     void keyDown(KeyEvent e);
     
     void displayText();
-    void checkLookup(std::vector<int> &results, int a, int b, int c, int d , int res);
+    void checkLookup(std::vector<int> &results, float a, float b, float c, float d, float res);
     
     // Audio Variables ////////////////////////////////////////////
     
@@ -51,8 +51,9 @@ public:
     
     int something = 2;
     
-    const static int resolutionX = 100;
-    const static int resolutionY = 100;
+    // it is probably best to set the resolutions to multiples of the mic setup dimensions
+    const static int resolutionX = 105;
+    const static int resolutionY = 69;
     float lookup [resolutionX][resolutionY][4];
     
     // Font Setup ///////////////////////////////////////////////////
@@ -64,8 +65,8 @@ public:
     
     std::vector<Tap> taps;
     float fade = 0.0f;
-    float xScale = 1.0f;
-    float yScale = 1.0f;
+    float xMax = 140.0f;
+    float yMax = 76.0f;
     
     
 };
@@ -104,13 +105,13 @@ void AudioAnalysisOSCApp::setup()
     waves[3] = Wave( mInput, audio::CHANNEL_BACK_RIGHT, 200.0f );
     
     live = true;
-    pauseEnabled = false;
+    pauseEnabled = true;
     
     
     // generate lookup table
     
-    for (int x = 0; x < 100; x++){
-        for (int y = 0; y < 100; y++){
+    for (int x = 0; x < resolutionX; x++){
+        for (int y = 0; y < resolutionY; y++){
             
             // note the sqrts ipmlicitly convert an int to a double so (float) is required
             
@@ -186,26 +187,16 @@ void AudioAnalysisOSCApp::update()
         }
     }
     
-//    // this is SO wrong but gives quick dirty results near center
-//    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
-//    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
-//    Vec2f pos = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
+    //    // this is SO wrong but gives quick dirty results near center
+    //    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
+    //    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
+    //    Vec2f pos = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
     
     // arranges time data and finds pos in lookup table
     // the time values must be scaled to the resolution of the lookup table
-    // the hypoteneuse of the real grid is scaled to the hypoteneuse of the lookup grid
+    // the hypoteneuse of the real grid (in terms of time) is scaled to the hypoteneuse of the lookup grid (in terms of index)
     
-    float scale = sqrt(resolutionX*resolutionX + resolutionY*resolutionY )/sqrt(xScale*xScale + yScale*yScale);
-    int a = waves[0].relativeStart* scale;
-    int b = waves[1].relativeStart* scale;
-    int c = waves[2].relativeStart* scale;
-    int d = waves[3].relativeStart* scale;
     
-    std::vector<int> posVals;
-    
-    checkLookup(posVals, a, b, c, d, resolutionX); // uses the largest resolution (default x) for distance measurement
-    
-    Vec2f pos = Vec2f( (float)posVals[0], (float)posVals[1]);
     
     if (live){
         
@@ -222,15 +213,35 @@ void AudioAnalysisOSCApp::update()
         if (peakCount > 0){
             live = false;
             
+            // THIS IMPLIES A TAP HAS BEEN REGISTERED
+            
+            float scale = sqrt(resolutionX*resolutionX + resolutionY*resolutionY )/sqrt(xMax*xMax + yMax*yMax);
+            float a = waves[0].relativeStart* scale;
+            float b = waves[1].relativeStart* scale;
+            float c = waves[2].relativeStart* scale;
+            float d = waves[3].relativeStart* scale;
+            
+            std::vector<int> posVals;
+            posVals.clear();
+            
+            checkLookup(posVals, a, b, c, d, resolutionX); // uses the largest resolution (default x) for distance measurement
+            
+            float triScaleX = (float)(getWindowWidth()/resolutionX);
+            float triScaleY = (float)(getWindowHeight()/resolutionY);
+            
+            Vec2f pos = Vec2f( (float)posVals[0]*triScaleX, (float)posVals[1]*triScaleY);
+            
+            
             // create new tap
             
             taps.push_back( Tap( pos, abs(waves[s].max) ));
+            
         }
     }
     
     // this is a check for the laptop mic input difference between channel arrival times (it should be zero)
-//    int diff = abs(waves[0].startIndex - waves[1].startIndex);
-//    assert( diff < 5 );
+    //    int diff = abs(waves[0].startIndex - waves[1].startIndex);
+    //    assert( diff < 5 );
     
 }
 
@@ -264,6 +275,8 @@ void AudioAnalysisOSCApp::draw()
         gl::drawLine( Vec2f(0.0f, waves[i].startPt.y), Vec2f(cinder::app::getWindowWidth(), waves[i].startPt.y) );
     }
     
+    displayText();
+    
     // fade out the background
     
     Rectf fadeMask = Rectf( Vec2f(0.0f, 0.0f), Vec2f(getWindowWidth(), getWindowHeight()));
@@ -284,17 +297,6 @@ void AudioAnalysisOSCApp::draw()
     for ( unsigned i = 0; i < removals.size(); i++ ){
         taps.erase( taps.begin()+removals[i] );
     }
-    
-    // find and draw the center offset
-    
-    gl::color(0.0f, 0.5f, 0.6f);
-    
-    float differenceX = (waves[0].startIndex - waves[1].startIndex)*xScale;
-    float differenceY = (waves[2].startIndex - waves[3].startIndex)*yScale;
-    Vec2f triangulate = Vec2f(getWindowWidth() * 0.5f + differenceX, getWindowHeight() * 0.5f + differenceY);
-    gl::drawSolidEllipse(triangulate, 10, 10);
-    
-    displayText();
 }
 
 
@@ -317,11 +319,19 @@ void AudioAnalysisOSCApp::keyDown(KeyEvent e){
     }
     
     if (e.getChar() == 'x') {
-        xScale = getWindowWidth()*0.5/abs(waves[0].startIndex - waves[1].startIndex);
+        xMax = abs(waves[0].startIndex - waves[1].startIndex);
     }
     
     if (e.getChar() == 'y') {
-        yScale = getWindowHeight()*0.5/abs(waves[2].startIndex - waves[3].startIndex);
+        yMax = abs(waves[1].startIndex - waves[2].startIndex);
+    }
+    
+    if (e.getChar() == 'm') {
+        fade+=0.2f;
+    }
+    
+    if (e.getChar() == 'n') {
+        fade-=0.2f;
     }
     
     if (e.getChar() == 'f') {
@@ -363,26 +373,30 @@ void AudioAnalysisOSCApp::displayText(){
     if (pauseEnabled) mTextureFont->drawString( "Pausing Enabled", Vec2f( 150.0f, 0.0f ) );
     if (pauseEnabled) mTextureFont->drawString( toString(Wave::delayThresh / 3.0f) + "sec delayTime", Vec2f( 150.0f, 15.0f ) );
     
+    mTextureFont->drawString( toString(xMax) + " = xMax", Vec2f( 150.0f, 40.0f ) );
+    mTextureFont->drawString( toString(yMax) + " = yMax", Vec2f( 150.0f, 60.0f ) );
+    
     
     glPopMatrix();
     
 }
 
-void AudioAnalysisOSCApp::checkLookup(std::vector<int> &results, int a, int b, int c, int d, int res){
+void AudioAnalysisOSCApp::checkLookup(std::vector<int> &results, float a, float b, float c, float d, float res){
     
-    for (int x = 0; x < 100; x++){
-        for (int y = 0; y < 100; y++){
+    for (int x = 0; x < resolutionX; x++){
+        for (int y = 0; y < resolutionY; y++){
             
-            if (lookup[x][y][0] - a < res*0.5 &&
-                lookup[x][y][1] - b < res*0.5 &&
-                lookup[x][y][2] - c < res*0.5 &&
-                lookup[x][y][3] - d < res*0.5){
+            if ((abs(lookup[x][y][0] - a) +
+                abs(lookup[x][y][1] - b) +
+                abs(lookup[x][y][2] - c) +
+                abs(lookup[x][y][3] - d)) < 10 ){
                 
                 results.push_back(x);
                 results.push_back(y);
                 
             }
         }
+        //       if (y != resolutionY-1) break;
     }
 }
 
