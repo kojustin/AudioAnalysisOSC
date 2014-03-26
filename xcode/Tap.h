@@ -29,6 +29,8 @@ public:
     float size;
     float t;
     
+    int mode;
+    
 private:
    
 };

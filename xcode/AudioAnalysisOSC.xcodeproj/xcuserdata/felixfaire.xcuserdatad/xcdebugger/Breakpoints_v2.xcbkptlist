@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tap.h"
-            timestampString = "417280859.129126"
+            timestampString = "417541878.799129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "class Tap"
             landmarkType = "3">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tap.cpp"
-            timestampString = "417282873.133314"
+            timestampString = "417541878.799129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "Tap::run()"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/AudioAnalysisOSCApp.cpp"
-            timestampString = "417529062.022724"
+            timestampString = "417547806.265517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "AudioAnalysisOSCApp::update()"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,13 +58,91 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/AudioAnalysisOSCApp.cpp"
-            timestampString = "417529263.517573"
+            timestampString = "417547806.265517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "AudioAnalysisOSCApp::update()"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../src/AudioAnalysisOSCApp.cpp"
+            timestampString = "417547806.265517"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "414"
+            endingLineNumber = "414"
+            landmarkName = "AudioAnalysisOSCApp::checkLookup(std::vector&lt;int&gt; &amp;results, int a, int b, int c, int d, float res)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../src/AudioAnalysisOSCApp.cpp"
+            timestampString = "417547806.265517"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "AudioAnalysisOSCApp::update()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../src/AudioAnalysisOSCApp.cpp"
+            timestampString = "417547806.265517"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "AudioAnalysisOSCApp::update()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AudioAnalysisOSCApp::update()"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp"
+                  timestampString = "417543976.945748"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "221"
+                  endingLineNumber = "221"
+                  offsetFromSymbolStart = "2337">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AudioAnalysisOSCApp::update()"
+                  moduleName = "AudioAnalysisOSC"
+                  urlString = "file:///Users/felixfaire/Developer/CinderProjects/AudioAnalysisOSC/src/AudioAnalysisOSCApp.cpp"
+                  timestampString = "417543976.945879"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "221"
+                  endingLineNumber = "221"
+                  offsetFromSymbolStart = "2401">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -74,28 +152,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/AudioAnalysisOSCApp.cpp"
-            timestampString = "417530656.991604"
+            timestampString = "417547806.265517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "396"
-            endingLineNumber = "396"
-            landmarkName = "AudioAnalysisOSCApp::checkLookup(std::vector&lt;int&gt; &amp;results, float a, float b, float c, float d, float res)"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
+            landmarkName = "AudioAnalysisOSCApp::checkLookup(std::vector&lt;int&gt; &amp;results, int a, int b, int c, int d, float res)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/AudioAnalysisOSCApp.cpp"
-            timestampString = "417530454.54806"
+            timestampString = "417547806.265517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
-            landmarkName = "AudioAnalysisOSCApp::update()"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
+            landmarkName = "AudioAnalysisOSCApp::checkLookup(std::vector&lt;int&gt; &amp;results, int a, int b, int c, int d, float res)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
